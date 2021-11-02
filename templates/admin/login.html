@@ -1,0 +1,102 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/login.css" %}">
+{{ form.media }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+{% if form.errors.items|length == 1 %}{% translate "Lütfen aşağıdaki hatalı alanı kontrol edin." %}{% else %}{% translate "Lütfen aşağıdaki hatalı alanları kontrol edin." %}{% endif %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+<style>
+  .alert {
+    padding: 20px;
+    background-color: #f44336;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+  }
+
+  .alert.success {background-color: #04AA6D;}
+  .alert.info {background-color: #2196F3;}
+  .alert.warning {background-color: #ff9800;}
+
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .closebtn:hover {
+    color: black;
+  }
+</style>
+
+<!-- <div class="alert warning">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <strong>ÖNEMLİ!</strong>  <strong><u>'Proje Kayıtlarım'</u></strong> sekmesinden proje kayıt formu oluşturabilirsiniz. Oluşturulan formlar <strong><u>'Proje Güncellemeleri Listesi'</u></strong> sekmesi altında kayda alınır. Oluşturulan proje kayıtlarını güncellemek için <strong><u>'Proje Kayıtlarım'</u></strong> sekmesinden ilk oluşturduğunuz form üzerinde değişiklik yaparak güncelleme oluşturabilirsiniz.
+</div> -->
+        
+<div id="content-main">
+
+{% if user.is_authenticated %}
+<p class="errornote">
+{% blocktranslate trimmed %}
+    {{ username }} olarak giriş yaptınız, ancak bu sayfaya erişiminiz bulunmamaktadır. 
+    Başka bir hesapla giriş yapmayı denemek ister misiniz?
+{% endblocktranslate %}
+</p>
+{% endif %}
+
+<form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    {{ form.username.errors }}
+    Kullanıcı Adı: {{ form.username }}
+  </div>
+  <div class="form-row">
+    {{ form.password.errors }}
+    Şifre: {{ form.password }}
+    <input type="hidden" name="next" value="{{ next }}">
+  </div>
+  {% url 'admin_password_reset' as password_reset_url %}
+  {% if password_reset_url %}
+  <div class="password-reset-link">
+    <a href="{{ password_reset_url }}">{% translate 'Kullanıcı adı veya şifrenizi mi unuttunuz?' %}</a>
+  </div>
+  {% endif %}
+  <div class="submit-row">
+    <input type="submit" value="{% translate 'Giriş Yap' %}">
+  </div>
+</form>
+
+</div>
+{% endblock %}

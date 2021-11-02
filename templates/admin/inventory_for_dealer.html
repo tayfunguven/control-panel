@@ -1,0 +1,64 @@
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+  <h1> MOMENTO MEDYA ENVANTER </h1>
+{% endblock %}
+{% load humanize %}
+{% block result_list %}
+    <div class="results">
+    <table>
+    <thead>
+      <tr>
+        <th>
+          <div class="text">
+            <a href="#">ÜRÜN KODU</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">ÜRÜN ADI</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">STOK</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">TAVSİYE EDİLEN BİRİM SATIŞ FİYATI</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">PARA BİRİMİ</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">AÇIKLAMA</a>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in products%}
+      <tr class="{% cycle 'row1' 'row2' %}">
+        <td>{{row.product_code }}</td>
+        <td>{{row.product_name}}</td>
+        <td>{{row.product_quantity}}</td>
+        <td>{{row.recommended_price}}</td>
+        <td>{{row.money_unit}}</td>
+        <td>{{row.description}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    {% comment %} <tr style="font-weight:bold; align:right; border-top:2px solid #DDDDDD;">
+            <td> Toplam Gelir: </td>
+            <td> {{ summary_total.grand_tot | default:0 }} </td>
+    </tr> {% endcomment %}
+  </table>
+</div>
+{% endblock %}
+
+{% block pagination %}{% endblock %}

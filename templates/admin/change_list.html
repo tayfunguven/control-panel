@@ -1,0 +1,132 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static admin_list %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" type="text/css" href="{% static "admin/css/changelists.css" %}">
+  {% if cl.formset %}
+    <link rel="stylesheet" type="text/css" href="{% static "admin/css/forms.css" %}">
+  {% endif %}
+  {% if cl.formset or action_form %}
+    <script src="{% url 'admin:jsi18n' %}"></script>
+  {% endif %}
+  {{ media.css }}
+  {% if not actions_on_top and not actions_on_bottom %}
+    <style>
+      #changelist table thead th:first-child {width: inherit}
+    </style>
+  {% endif %}
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media.js }}
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} app-{{ opts.app_label }} model-{{ opts.model_name }} change-list{% endblock %}
+
+{% if not is_popup %}
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+<a href="{% url 'admin:index' %}">{% translate 'Anasayfa' %}</a>
+&rsaquo; <a href="{% url 'admin:app_list' app_label=cl.opts.app_label %}">{{ cl.opts.app_config.verbose_name }}</a>
+&rsaquo; {{ cl.opts.verbose_name_plural|capfirst }}
+</div>
+{% endblock %}
+{% endif %}
+
+{% block coltype %}flex{% endblock %}
+
+{% block content %}
+  <div id="content-main">
+    {% block object-tools %}
+        <ul class="object-tools">
+          {% block object-tools-items %}
+            {% change_list_object_tools %}
+          {% endblock %}
+        </ul>
+    {% endblock %}
+    
+    {% if cl.formset and cl.formset.errors %}
+        <p class="errornote">
+        {% if cl.formset.total_error_count == 1 %}{% translate "Lütfen aşağıda belirtilen hatayı düzeltin." %}{% else %}{% translate "Lütfen aşağıda belirtilen hataları düzeltin." %}{% endif %}
+        </p>
+        {{ cl.formset.non_form_errors }}
+    {% endif %}
+    <div class="module{% if cl.has_filters %} filtered{% endif %}" id="changelist">
+      <div class="changelist-form-container">
+        {% block search %}{% search_form cl %}{% endblock %}
+        {% block date_hierarchy %}{% if cl.date_hierarchy %}{% date_hierarchy cl %}{% endif %}{% endblock %}
+
+        <form id="changelist-form" method="post"{% if cl.formset and cl.formset.is_multipart %} enctype="multipart/form-data"{% endif %} novalidate>{% csrf_token %}
+        {% if cl.formset %}
+          <div>{{ cl.formset.management_form }}</div>
+        {% endif %}
+        <style>
+          .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+          }
+
+          .alert.success {background-color: #04AA6D;}
+          .alert.info {background-color: #2196F3;}
+          .alert.warning {background-color: #ff9800;}
+
+          .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+
+          .closebtn:hover {
+            color: black;
+          }
+        </style>
+        {% if opts.app_config.verbose_name == 'Bayi İşlemleri' %} 
+          {% if opts.verbose_name_plural == 'Proje Güncellemeleri Listesi' %}
+            <div class="alert warning">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>ÖNEMLİ!</strong>  <strong><u>'Proje Kayıtlarım'</u></strong> sekmesinden proje kayıt formu oluşturabilirsiniz. Oluşturulan formlar <strong><u>'Proje Güncellemeleri Listesi'</u></strong> sekmesi altında kayda alınır. Oluşturulan proje kayıtlarını güncellemek için <strong><u>'Proje Kayıtlarım'</u></strong> sekmesinden ilk oluşturduğunuz form üzerinde değişiklik yaparak güncelleme oluşturabilirsiniz.
+            </div>
+            <div class="alert warning">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>ÖNEMLİ!</strong> Sistemin kullanımı sırasında bir hata ile karşılaşılması durumunda, yapmak istediğiniz işlemi belirterek <strong><u>developer@momentomedya.com</u></strong> adresine e-posta gönderebilirsiniz.
+            </div>
+            <div class="alert danger">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>UYARI!</strong> Proje ve güncelleme kayıtlarının onay statüsü aşağıda görünmektedir. Momento Medya yetkilileri tarafından eklenen notları <strong><u>'Proje Güncellemeleri Listesi'</u></strong> sekmesindeki kayıtlar içerisinden inceleyiniz.
+            </div>
+          {% endif %}
+        {% endif %}
+        {% if cl.formset and cl.result_count %}<input type="submit" name="_save" class="default" value="{% translate 'Kaydet' %}">{% endif %}
+        {% block result_list %}
+          {% if action_form and actions_on_top and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+          {% result_list cl %}
+          {% if action_form and actions_on_bottom and cl.show_admin_actions %}{% admin_actions %}{% endif %}
+        {% endblock %}
+        {% block pagination %}{% pagination cl %}{% endblock %}
+        </form>
+      </div>
+      {% block filters %}
+        {% if cl.has_filters %}
+          <div id="changelist-filter">
+            <h2>{% translate 'Filtrele' %}</h2>
+            {% if cl.has_active_filters %}<h3 id="changelist-filter-clear">
+              <a href="{{ cl.clear_all_filters_qs }}">&#10006; {% translate "Tüm filtreleri temizle" %}</a>
+            </h3>{% endif %}
+            {% for spec in cl.filter_specs %}{% admin_list_filter cl spec %}{% endfor %}
+          </div>
+        {% endif %}
+      {% endblock %}
+    </div>
+  </div>
+{% endblock %}

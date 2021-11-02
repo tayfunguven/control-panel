@@ -1,0 +1,111 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+<div id="content-main">
+    <style>
+          .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+            opacity: 1;
+            transition: opacity 0.6s;
+            margin-bottom: 15px;
+          }
+
+          .alert.success {background-color: #04AA6D;}
+          .alert.info {background-color: #2196F3;}
+          .alert.warning {background-color: #ff9800;}
+
+          .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+
+          .closebtn:hover {
+            color: black;
+          }
+        </style>
+        {% for group in request.user.groups.all  %}
+          {% if 'Bayiler' == group.name and user.is_authenticated%}
+            <div class="alert warning">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>ÖNEMLİ!</strong>  <strong><u>'Proje Kayıtlarım'</u></strong> sekmesinden proje kayıt formu oluşturabilirsiniz. Oluşturulan formlar <strong><u>'Proje Güncellemeleri Listesi'</u></strong> sekmesi altında kayda alınır. Oluşturulan proje kayıtlarını güncellemek için <strong><u>'Proje Kayıtlarım'</u></strong> sekmesinden ilk oluşturduğunuz form üzerinde değişiklik yaparak güncelleme oluşturabilirsiniz.
+            </div>
+            <div class="alert danger">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>UYARI!</strong> Kaydedilen projelerde, kayıt onaylandıktan sonra haftalık olarak bilgi paylaşımı yapılması zorunludur. Her bir proje <strong><u>en çok 3 ay (90 gün)</u></strong> kayıtlı kalabilir.
+              Aksi görüşülmediği sürece proje kayıt hakkı başka bayilere açılabilir.
+            </div>
+            <div class="alert info">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>BİLGİ: </strong><strong><u>'Tüm Bayi Projeleri'</u></strong> sekmesinden diğer bayiliklerin projelerini, <strong><u>'Momento Medya Envanter'</u> sekmesinden şirketimizin envanter bilgisini görüntüleyebilirsiniz.</strong>.
+            </div>
+            <div class="alert success">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              Sistemde hata meydana gelmesi durumunda, son olarak yapmaya çalıştığınız işleme dair bilgi ekleyerek <strong><u>developer@momentomedya.com</u></strong> adresine e-posta gönderebilirsiniz.
+            </div>
+          {% elif 'Momento Medya Yönetim' == group.name and user.is_authenticated%}
+            <div class="alert success">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>HOŞ GELDİNİZ! </strong> Sistemdeki bütün uygulamaları aşağıdaki listede, sistemle ilgili duyuruları üst kısımda görebilirsiniz.
+            </div>
+          {% elif 'Momento Medya Teknik' == group.name and user.is_authenticated%}
+            <div class="alert warning">
+              <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+              <strong>HATIRLATMA!</strong> Saat 23:59'dan önce günlük raporunuzu girmeyi unutmayınız.
+            </div>
+          {% endif %}
+        {% endfor %}
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% translate 'Son İşlemler' %}</h2>
+        <h3>{% translate 'İşlemlerim' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% translate 'Mevcut değil' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                {% if entry.is_deletion or not entry.get_admin_url %}
+                    {{ entry.object_repr }}
+                {% else %}
+                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr }}</a>
+                {% endif %}
+                <br>
+                {% if entry.content_type %}
+                    <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+                {% else %}
+                    <span class="mini quiet">{% translate 'Bilinmeyen içerik' %}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+    
+</div>
+{% endblock %}

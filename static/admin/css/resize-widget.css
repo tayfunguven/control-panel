@@ -1,0 +1,13 @@
+.form-horizontal .control-group .controls .selector {
+    width: 100%;
+}
+
+.form-horizontal .control-group .controls .selector .selector-available,
+.form-horizontal .control-group .controls .selector .selector-chosen {
+    max-width: 45%;
+    height: 500px;
+}
+
+.form-horizontal .control-group .controls .selector select {
+    min-height: 200px;
+}

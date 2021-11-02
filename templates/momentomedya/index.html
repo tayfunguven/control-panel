@@ -1,0 +1,283 @@
+{% extends 'base_web.html' %}
+{% load static %} 
+{% block content %}
+    <!--Landing Section-->
+    <div class="landing">
+        <div class="home-wrap">
+            <div class="home-inner"></div>
+        </div>
+    </div>
+    <div class="caption text-center">
+        <h1>Test için bize ulaşabilirsiniz!</h1>
+        <h3>Momento Medya Ekibi olarak sizlere en iyi ve kaliteli hizmetleri sağlamaya çalışıyoruz…</h3>
+        <a class="btn btn-outline-light btn-lg" href="/contact">İletişim</a>
+    </div>
+    <!--End Landing Section-->
+
+    <!--SOLUTIONS SECTION-->
+    <div class="container" id="solutions">
+        <div class="narrow text-center">
+			<div class="col-12">
+				<h3 class="heading">Çözümlerimiz</h3>
+				<div class="heading-underline"></div>
+			</div>
+			<div class="row text-center">
+				<div class="col-md-3">
+					<div class="feature">
+						<i class="fas fa-signal fa-4x" data-fa-transform="shrink-3 up-5"></i>
+						<h3>Anten Çözümleri</h3>
+						<p>Momento Medya farkıyla %100 yerli anten üretimi sağlıyoruz.</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="feature">
+						<i class="fas fa-truck fa-4x" data-fa-transform="shrink-3 up-5"></i>
+						<h3>Canlı Yayın Araçları Çözümleri</h3>
+						<p>Yayın araçlarınızın bakımı onarımı ve yeniden dizaynı için bize ulaşın</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="feature">
+						<i class="fas fa-users fa-4x" data-fa-transform="shrink-3 up-5"></i>
+						<h3>Çözüm Ortaklığı</h3>
+						<p>Uzman mühendis kadromuzla tüm çözümlerinize biz de ortağız…</p>
+					</div>
+				</div>
+                <div class="col-md-3">
+					<div class="feature">
+						<i class="fas fa-barcode fa-4x" data-fa-transform="shrink-3 up-5"></i>
+						<h3>2. El Ürün</h3>
+						<p>Sizler için oluşturduğumuz geniş marka ağı ve Momento Medya garantisi ile sağladığımız 2. el ürünlerimiz hakkında bilgi için bize ulaşın</p>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+    <!--END SOLUTIONS SECTION-->
+
+    <!--ABOUT US SECTION-->
+    <!-- <?php $page = 'aboutUs';include 'includes/index.php#aboutUs'; ?> -->
+    <div class="container-aboutus" id="aboutUs" data-background="{% static 'momentomedya/img/image-aboutbackground.jpg' %}" style="background-image:url({% static 'momentomedya/Assets/css/img/image-aboutbackground.jpg'%})">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <div class="container bg-light">
+                    <div class="row">
+                        <div class="col-1">
+                            <div class="verticalText">
+                                HAKKIMIZDA
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <div class="row">
+                                <h4>Medyadaki eksperiniz olarak 15 Ülkede Deneyimimizle sizin için çalışıyoruz… </h4>
+                            </div>
+                            <div class="heading-underline-aboutus"></div>
+                            <div class="row">
+                                <blockquote>
+                                    Momento Medya ailesi olarak biz, güveninizi hak etmek için çok çalışıyoruz. 
+                                    Medya sektöründe 29 yıldır üretici ve distribütör olarak hizmet vererek edindiğimiz tüm tecrübemizi sizlerin desteğiyle büyütmeye devam ediyoruz. 
+                                    Geliştirdiğimiz tüm projelerde müşteri odaklı çözümler sağlayarak güçleniyoruz. Gerek kendi üretimlerimiz gerekse temsilcisi olduğumuz markaları sizlere sunmanın gururunu yaşıyoruz. 
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END ABOUT US SECTION-->
+
+    <!--SERVICES SECITON-->
+    <div class="container" id="services">
+        <div class="col-12 text-center">
+            <h3 class="heading">Servislerimiz</h3>
+            <div class="heading-underline"></div>
+        </div>
+        <div class="row text-center">
+            <div class="col-12">
+                <div class="card-deck" style="margin-bottom: 5rem;">
+                    <div class="card">
+                        <img src="{% static 'momentomedya/Assets/img/image-sistementegrasyonu.jpg' %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Sistem Entegrasyonu</h5>
+                        <div class="heading-underline"></div>
+                        <p class="card-text">Biz, zincirin gücünün en zayıf halka kadar olduğu bilinciyle 29 yıldır özenle çalışıyoruz. 
+                            Anahtar teslimi tüm entegrasyonlarınız için hazırız. </p>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                    <div class="card">
+                        <img src="{% static 'momentomedya/Assets/img/image-teknikdestek.jpg' %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Teknik Servis & Destek</h5>
+                            <div class="heading-underline"></div>
+                            <p class="card-text">Temsil ettiğimiz tüm markaların ya da entegrasyonunu tamamladığımız tüm projeler Momento Medya güvencesi altında. ”Medyadaki eksperiniz” sloganıyla tüm teknik problemleriniz için biz hazırız.</p>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                    <div class="card">
+                        <img src="{% static 'momentomedya/Assets/img/image-cozumortagligi.jpg' %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Çözüm Ortaklığı</h5>
+                            <div class="heading-underline"></div>
+                            <p class="card-text">Tüm çözüm ortaklarımızın teknik ihtiyaçlarını tüm detaylarıyla inceleyerek çözüm sağlıyoruz.  Bize neye ihtiyacınız olduğunu iletin uzman ekibimiz sizler için çözüm üretsin…</p>
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END SERVICES SECTION-->
+
+    <!--SOLUTION PARTNERSHIP-->
+    <div class="container-partnership" id="solutionPartnership" data-background="{% static 'momentomedya/img/image-camlicakule2.jpg' %}" style="background-image: url({% static 'momentomedya/Assets/css/img/image-camlicakule2.jpg' %});">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-8">
+                <div class="container bg-light">
+                    <div class="row">
+                        <div class="col-1">
+                            <div class="verticalText">
+                                ÇÖZÜM ORTAKLIĞI
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <div class="row">
+                                <h4>Projeleriniz için çalışıyoruz…</h4>
+                            </div>
+                            <div class="heading-underline-aboutus"></div>
+                            <div class="row">
+                                <blockquote>
+                                    Sizlerden gelen istekler için 29 yıllık sektörel tecrübemizle çok çalışıyoruz. Sizlerden gelen tüm çözüm istekleri için uzman mühendis kadromuz eşliğinde sizin için, sizinle geleceği tasarlıyoruz…
+                                </blockquote>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3>İhtiyaç Analizi</h3>
+                                    <p>Tüm iş ortaklarımız için ihtiyaç duydukları çözümleri titizlikle dinliyor ve çözüm örnekleri için analizler yapıyoruz.</p>
+                                </div>
+                                <div class="col-6">
+                                    <h3>Projelendirme</h3>
+                                    <p>Yapılan analizler doğrultusunda uzman mühendis kadromuzla diyagramlarda projelerimizi sizlere sunuyoruz.</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <h3>Kurulum</h3>
+                                    <p>Seçilen projeyi itinayla kuruyor ve uzun süreli testlerini sağlıyoruz.</p>
+                                </div>
+                                <div class="col-6">
+                                    <h3>Destek</h3>
+                                    <p>Tasarladığımız her proje Momento Medya garantisi altında olup 7/24 desteğini veriyoruz.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END SOLUTION PARTNERSHIP-->
+
+    <!--MOMENTO MEDYA SECTION-->
+    <div class="container" style="padding: 5rem 0;" id="momentoMedya">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row justify-content-center">
+                    <div class="col-1">
+                        <div class="verticalText">
+                            MOMENTO MEDYA
+                        </div>
+                    </div>
+                    <div class="col-8 momentomedya-text">
+                        <h3>29 Yıllık sektörel tecrübemizle…</h3>
+                        <div class="heading-underline-aboutus"></div>
+                        <div class="row">
+                            <span class="count">15</span>
+                            <h2 class="count-p">+</h2>
+                        </div>
+                        <div class="row">
+                            <p>ÜLKEDE</p>
+                        </div>
+                        <div class="row">
+                            <span class="count">200</span>
+                            <h2 class="count-p">+</h2>
+                        </div>
+                        <div class="row">
+                            <p>MUTLU MÜŞTERİMİZ</p>
+                        </div>
+                        <div class="row">
+                            <span class="count">400</span>
+                            <h2 class="count-p">+</h2>
+                        </div>
+                        <div class="row">
+                            <p>SİSTEM ÇÖZÜMÜ</p>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="card" style="height: auto; width: 20vw; object-fit: cover;">
+                            <img src="{% static 'momentomedya/Assets/img/image-media.jpg' %}" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+    </div>
+    <!--END MOMENTO MEDYA SECTION-->
+
+    <!--BRANDS SECTION-->
+    <!-- <?php $page = 'aboutUs';include 'includes/index.php#brands'; ?> -->
+    <div class="container-brands" id="brands">
+        <div class="row">
+            <div class="col-md-3 text-center">
+                <h3 class="heading">Markalarımız</h3>
+                <div class="heading-underline"></div>
+            </div>
+            <div class="col-md-9">
+                <div class="card-deck">
+                    <div class="card">
+                        <img src="{% static 'momentomedya/Assets/img/brands/image-aviwest.png' %}" alt="...">
+                        <a href="https://www.aviwest.com/">
+                            <div class="card-footer">
+                                <small>incele &#8594;</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card">
+                        <img src="{% static 'momentomedya/Assets/img/brands/image-reckeen.jpg' %}" alt="...">
+                        <a href="https://www.reckeen.com/">
+                            <div class="card-footer">
+                                <small>incele &#8594;</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card">
+                        <img src="{% static 'momentomedya/Assets/img/brands/image-spacepath.jpg' %}" alt="...">
+                        <a href="https://www.space-path.com/">
+                            <div class="card-footer">
+                                <small>incele &#8594;</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END BRANDS SECTION-->
+    
+    <!--CONTACT US SECTION-->
+    <div class="contactus " id="contactUs">
+        <div class="col-12 narrow text-center">
+            <h3>Bize ulaşın</h3>
+            <p class="lead">Teknik ekibimizle tanışın… Tüm sorularınıza eksiksiz cevap bulmak için özenle çalışıyoruz…</p>
+            <a class="btn btn-secondary bg-light btn-outline-light btn-md" href="/contact" target="_blank">İletişim</a>
+        </div>
+    </div>
+    <!--END CONTACT US SECTION-->
+
+{% endblock %}

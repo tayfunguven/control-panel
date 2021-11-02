@@ -1,0 +1,112 @@
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+  <h1> Şirket Gelir Özeti </h1>
+{% endblock %}
+{% load humanize %}
+{% block result_list %}
+    <div class="results">
+    <table>
+    <thead>
+      <tr>
+        <th>
+          <div class="text">
+            <a href="#">Gelir Kodu</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Gelir Adı</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Miktar</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Birim</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Döviz Fiyatı</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Döviz Cinsi</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Fiyat</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Ara Toplam</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">KDV Oranı (%)</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">KDV Tutarı</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Genel Toplam</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Gelir Türü</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">İşlem Tarihi</a>
+          </div>
+        </th>
+        <th>
+          <div class="text">
+            <a href="#">Kime/Nereye</a>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in summary %}
+      <tr class="{% cycle 'row1' 'row2' %}">
+        <td>{{row.income_code}}</td>
+        <td>{{row.income_name}}</td>
+        <td>{{row.amount}}</td>
+        <td>{{row.unit_id}}</td>
+        <td>{{row.currency_price}}</td>
+        <td>{{row.currency_type}}</td>
+        <td>{{row.price}}</td>
+        <td>{{row.subtotal}}</td>
+        <td>{{row.vat_rate}}</td>
+        <td>{{row.vat_amount}}</td>
+        <td>{{row.grand_total}}</td>
+        <td>{{row.payment_type}}</td>
+        <td>{{row.log_date}}</td>
+        <td>{{row.income_to}}</td>      
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tr style="font-weight:bold; align:right; border-top:2px solid #DDDDDD;">
+            <td> Toplam Gelir: </td>
+            <td> {{ summary_total.grand_tot | default:0 }} </td>
+    </tr>
+  </table>
+</div>
+{% endblock %}
+
+{% block pagination %}{% endblock %}

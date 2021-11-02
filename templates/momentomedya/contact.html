@@ -1,0 +1,66 @@
+{% extends 'base_web.html' %}
+{% load static %}
+
+{% block content %}
+
+<!--CONTACT SECTION-->
+<div class="container-contact" id="contact" data-background="{% static 'momentomedya/img/image-contactbg' %}" style="background-image:url({% static 'momentomedya/Assets/css/img/image-contactbg.jpg' %})">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="container bg-light">
+                <div class="row">
+                    <div class="col-md-1">
+                        <div class="verticalText">
+                            İLETİŞİM
+                        </div>
+                    </div>
+                    <div class="col-md-11">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Bize ulaşın...</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="heading-underline-contact"></div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <div class="col-md-3">
+                                <div class="feature">
+                                    <i class="fas fa-map-marked fa-4x" data-fa-transform="shrink-3 up-5"></i>
+                                    <h3>Adres</h3>
+                                    <p>19 Mayıs Cad, 19 Mayıs Mah, Ubm Plaza No 37 Kat 2, Ofis 7, 34360 Şişli/İstanbul</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="feature">
+                                    <i class="fas fa-phone fa-4x" data-fa-transform="shrink-3 up-5"></i>
+                                    <h3>Telefon</h3>
+                                    <p>+90 (212) 222 80 50</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="feature">
+                                    <i class="fas fa-envelope fa-4x" data-fa-transform="shrink-3 up-5"></i>
+                                    <h3>E-posta</h3>
+                                    <p>info@momentomedya.com</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="feature">
+                                    <i class="fab fa-instagram fa-4x" data-fa-transform="shrink-3 up-5"></i>
+                                    <h3>Instagram</h3>
+                                    <p><a href="https://www.instagram.com/momentomedya/">momentomedya</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--END CONTACT SECTION-->
+
+{% endblock %}

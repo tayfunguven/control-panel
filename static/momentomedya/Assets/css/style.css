@@ -1,0 +1,628 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost&display=swap');
+
+body {
+  overflow-x: hidden;
+  font-family: 'Jost', sans-serif;
+  background-color: whitesmoke;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/*--HOME SECTION--*/
+.navbar {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: .9rem;
+  letter-spacing: .1rem;
+  min-height: 90px;
+  background: rgba(27, 27, 27, 0.9)!important;
+}
+
+.navbar-brand img{
+  margin-left: 1rem;
+  height: 4rem;
+}
+
+.navbar ul li {
+  letter-spacing: 0.2rem;
+  padding-left: 1.5rem;
+}
+
+
+.navbar-dark .navbar-nav .nav-link{
+  color: rgb(163, 163, 163);
+  padding-top: .8rem;
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:hover{
+  color: rgb(52, 142, 216);
+}
+
+.home-inner {
+  color: rgba(0, 0, 0, black);
+  background-image:url(img/image-leading.jpg);
+}
+
+.caption {
+  width: 100%;
+  max-width: 100%;
+  position: absolute;
+  top: 30%;
+  z-index: 1;
+  color: whitesmoke;
+  text-transform: uppercase;
+}
+
+.caption h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: .3rem;
+  text-shadow: .1rem .1rem 1rem black;
+  padding-bottom: 1rem;
+}
+
+.caption h3 {
+  font-size: 2rem;
+  text-shadow: .1rem .1rem .7rem black;
+  padding: 0 2rem 0;
+}
+
+.btn-lg {
+  border-width:medium;
+  border-radius: 10;
+  padding: .6rem 1.3rem;
+  font-size: 1rem;
+}
+
+.btn-lg.active,
+.btn-lg:hover{
+  color: whitesmoke;
+  background-color:rgb(41, 71, 95);
+  border-color: rgb(41, 71, 95);
+}
+
+
+
+/*--SOLUTIONS SECTION--*/
+#solutions.container{
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+h3.heading{
+  font-size: 1.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.heading-underline {
+  width: 5rem;
+  height: .2rem;
+  background-color: rgb(119, 119, 180);
+  margin: 0 auto 2rem;
+}
+.feature svg.svg-inline--fa {
+  color: rgb(119, 119, 180);
+}
+
+/*--ABOUT US SECTION--*/
+.container-aboutus{
+  padding: 100px 0;
+  height: auto;
+  background-image: url(img/image-camlicakule2.jpg);
+  background-size:cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.container-aboutus .container {
+  padding: 2rem 1rem 5rem;
+}
+
+.heading-underline-aboutus {
+  width: 7rem;
+  height: .2rem;
+  background-color: rgb(119, 119, 180);
+  margin: 1rem 0 2rem;
+}
+
+.container-aboutus h4{
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+}
+
+.container-aboutus blockquote {
+  font-size: 1.2rem;
+}
+
+/*--PARTNERSHIP SECTION--*/
+.container-partnership{
+  padding: 100px 0;
+  height: auto;
+  background-image: url(img/image-partnershipbackground.jpg);
+  background-size:cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.container-partnership .container {
+  padding: 2rem 1rem 5rem;
+}
+
+.container-partnership h4{
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+}
+
+.container-partnership blockquote {
+  font-size: 1.2rem;
+}
+
+.container-partnership h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+.container-partnership p {
+  font-size: 1.2rem;
+}
+
+/*--BRANDS SECTION--*/
+.container-brands {
+  background-color: rgb(156, 156, 156);
+  background-size:cover !important;
+  background-repeat: no-repeat !important;
+}
+
+
+.container-brands .card-deck .card img {
+  width: auto;
+  height: 10vw;
+  object-fit: cover;
+}
+
+
+
+/*--SERVICES SECTION--*/  
+.card-deck .card {
+  background-color: whitesmoke;
+}
+
+.card-deck .card h5 {
+  font-size: 1.8rem;
+}
+
+.card-deck .card p {
+  font-size: 1.1rem;
+}
+
+.card-deck .card .card-footer {
+  background-color:rgb(41, 71, 95);
+  color: whitesmoke;
+}
+
+.card-deck .card .card-footer a{
+  color: whitesmoke;
+}
+.card-deck .card .card-footer a.active,
+.card-deck .card .card-footer a:hover {
+  color: whitesmoke;
+}
+
+/*--MOMENTO MEDYA SECTION--*/
+
+.verticalText {
+  width: 1px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: rgb(119, 119, 180);
+  letter-spacing: 0.9rem;
+  transform: rotate(-180deg);
+  writing-mode: vertical-rl;
+
+}
+
+.counter h2 {
+  font-size: 2rem;
+  font-weight: 650;
+  color: rgb(119, 119, 180);
+
+}
+
+.momentomedya-text h3 {
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+}
+
+
+.count {
+  color: rgb(119, 119, 180);
+  font-size: 2.5rem;
+  font-weight: 600;
+  font-family: "Jost",sans-serif;
+  line-height: 1;
+  margin-bottom: 12px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+.count-p {
+  color: rgb(119, 119, 180);
+  font-size: 2.5rem;
+  font-weight: 500;
+  font-family: "Jost",sans-serif;
+  line-height: 1;
+  margin-bottom: 12px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+
+/*--CONTACT US SECTION--*/
+.contactus{
+  padding: 100px 0;
+  color: rgba(0, 0, 0, black);
+  opacity: 0.8;
+  height: auto;
+  background-image: url(img/image-contact.jpg);
+  background-size:cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.contactus h3 {
+  color: white;
+  font-size: 2.4rem;
+  font-weight: 700;
+  letter-spacing: .3rem;
+  text-shadow: .1rem .1rem 1rem black;
+  padding-bottom: 1rem;
+}
+
+.contactus p {
+  color:whitesmoke;
+  font-size: 1.5rem;
+  text-shadow: .1rem .1rem .7rem black;
+  padding-bottom:  1.6rem;
+}
+
+.contactus .btn-secondary{
+  color: black;
+}
+
+
+/*---REFERENCES PAGE---*/
+
+.ref .container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 5px;
+}
+
+.ref .container > div {
+  cursor: pointer;
+  height: 150px;
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.5s ease-in;
+}
+
+.ref .container > div:hover {
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+.ref .container > div:nth-of-type(1) {
+  grid-column: 1 / 3;
+}
+
+.ref .container > div:nth-of-type(6) {
+  grid-column: 3 / 5;
+}
+
+.ref .container > div:nth-of-type(9) {
+  grid-column: 3 / 5;
+}
+
+.ref .container > div:nth-of-type(10) {
+  grid-column: 1 / 3;
+}
+
+.ref .container img {
+  width: 100%;
+  height: 5vw;
+  object-fit:contain;
+}
+
+.ref .iconbackground {
+  background-color: rgb(206, 206, 206);
+}
+
+
+/*--CAREER SECTION--*/
+.container-career{
+  padding: 100px 0;
+  height: auto;
+  background-image: url(img/image-camlicakule2.jpg);
+  background-size:cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.container-career .container {
+  padding: 2rem 1rem 5rem;
+  width: 75%;
+}
+
+.heading-underline-career {
+  width: 7rem;
+  height: .2rem;
+  background-color: rgb(119, 119, 180);
+}
+
+.container-career h4{
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+}
+
+.container-career .form-area {
+  width: 70%;
+}
+
+/*--CONTACT SECTION--*/
+.container-contact{
+  padding: 100px 0;
+  height: auto;
+  background-size:cover !important;
+  background-repeat: no-repeat !important;
+}
+
+.container-contact .container {
+  padding: 2rem 1rem 2rem;
+}
+
+.heading-underline-contact {
+  width: 7rem;
+  height: .2rem;
+  background-color: rgb(119, 119, 180);
+  margin-bottom: 2rem;
+}
+
+.container-contact h4{
+  font-size: 2.5rem;
+  letter-spacing: 0.5rem;
+}
+
+@media (max-width: 481px){
+  .navbar {
+    font-size: .5rem;
+    min-height: 17px;
+  }
+
+  .navbar-brand img{
+    height: 2rem;
+  }
+  
+  h3.heading{
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    margin-top: 1.5rem;
+  }
+  
+  .heading-underline {
+    width: 3rem;
+    height: .2rem;
+    background-color: rgb(119, 119, 180);
+    margin: 0 auto 2rem;
+  }
+  .feature svg.svg-inline--fa {
+    font-size: 2.5rem;
+    color: rgb(119, 119, 180);
+  }
+
+  .verticalText {
+    width: 0.5rem;
+    font-size: 1rem;
+    letter-spacing: 0.6rem;
+  
+  }
+  
+  .container-aboutus blockquote {
+    font-size: 1.4rem;
+  }
+
+  .momentomedya-text h3 {
+    font-size: 1.6rem;
+    letter-spacing: 0.5rem;
+  }
+  
+  .count {
+    font-size: 1.6rem;
+  }
+  
+  .count-p {
+    color: rgb(119, 119, 180);
+    font-size: 1.6rem;
+   
+  } 
+  
+  .container-partnership h4{
+    font-size: 2rem;
+    letter-spacing: 0.3rem;
+  }
+  
+  .container-partnership blockquote {
+    font-size: 1rem;
+  }
+  
+  .container-partnership h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  .container-partnership p {
+    font-size: 0.8rem;
+  }
+  
+  .heading-underline-contact {
+    width: 5rem;
+    height: .2rem;
+    background-color: rgb(119, 119, 180);
+    margin-bottom: 1.5rem;
+  }
+  
+  .container-contact h4{
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+  }
+
+
+}
+
+
+/*--MEDIA QUERIES--*/
+@media (max-width: 769px){
+  .navbar {
+    font-size: .6rem;
+    min-height: 20px;
+  }
+
+  .navbar-brand img{
+    height: 2.5rem;
+  }
+
+  .caption h1 {
+    font-size: 1.6rem;
+    padding-bottom: 1rem;
+  }
+  
+  .caption h3 {
+    font-size: 1.1rem;
+    padding-bottom:  1.6rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  
+  .btn-lg {
+    padding: .6rem 1rem;
+    font-size: 0.7rem;
+  } 
+  h3.heading{
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    margin-top: 3rem;
+  }
+  
+  .heading-underline {
+    width: 3rem;
+    height: .2rem;
+    background-color: rgb(119, 119, 180);
+    margin: 0 auto 2rem;
+  }
+  .feature svg.svg-inline--fa {
+    font-size: 3rem;
+    color: rgb(119, 119, 180);
+  }
+
+  .heading-underline-aboutus {
+    width: 4rem;
+    height: .2rem;
+    background-color: rgb(119, 119, 180);
+    margin: 1rem 0 2rem;
+  }
+  
+  .container-aboutus h4{
+    font-size: 2rem;
+    letter-spacing: 0.3rem;
+  }
+  
+  .container-aboutus blockquote {
+    font-size: 1rem;
+  }
+  
+  .card-deck .card h5 {
+    font-size: 1.2rem;
+  }
+  
+  .card-deck .card p {
+    font-size: 1rem;
+  }
+  
+  .verticalText {
+    width: 1px;
+    font-size: 1.2rem;
+    letter-spacing: 0.6rem;
+  
+  }
+  
+  .momentomedya-text h3 {
+    font-size: 1.6rem;
+    letter-spacing: 0.5rem;
+  }
+  
+  .count {
+    font-size: 1.6rem;
+  }
+  
+  .count-p {
+    color: rgb(119, 119, 180);
+    font-size: 1.6rem;
+   
+  }
+  
+  .container-brands .card-deck .card img {
+    width: auto;
+    height: 30vw;
+    object-fit: cover;
+  }
+
+  .ref .container > div {
+    height: 100px;
+  }
+
+  .ref .container img {
+    width: auto;
+    height: 7vw;
+  }
+
+  .container-career .container {
+    padding: 2rem 1rem 5rem;
+    width: 100%;
+  }
+  
+  .heading-underline-career {
+    width: 7rem;
+    height: .2rem;
+    background-color: rgb(119, 119, 180);
+  }
+  
+  .container-career h4{
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+  }
+  
+  .container-career .form-area {
+    width: 100%;
+  }
+  
+  .container-contact .container {
+    padding: 2rem 1rem 2rem;
+  }
+  
+  .heading-underline-contact {
+    width: 5rem;
+    height: .2rem;
+    background-color: rgb(119, 119, 180);
+    margin-bottom: 1.5rem;
+  }
+  
+  .container-contact h4{
+    font-size: 2rem;
+    letter-spacing: 0.5rem;
+  }
+  
+
+}
