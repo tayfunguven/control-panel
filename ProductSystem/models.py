@@ -152,6 +152,9 @@ class ProductIdentificationImages(models.Model):
         verbose_name = "Ek Numara Ürün Görseli"
         verbose_name_plural = "Ek Numara Ürün Görselleri"
 
+
+
+
 ##########################################
 ##########    PRODUCT ENTRY    ###########
 ########################################## 

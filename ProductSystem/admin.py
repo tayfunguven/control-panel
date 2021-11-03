@@ -63,28 +63,28 @@ class InventoryCardAdmin(ImportExportModelAdmin):
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image_one:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_one.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_one.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image_two:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_two.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_two.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image_three:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_three.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_three.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         # ex. the name of column is "image"
         if obj.image_four:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_four.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_four.url))
         else:
             return '(No image)'
 
@@ -119,28 +119,28 @@ class ProductIdentificationInline(NestedStackedInline):
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image_one:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_one.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_one.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image_two:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_two.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_two.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image_three:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_three.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_three.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         # ex. the name of column is "image"
         if obj.image_four:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_four.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_four.url))
         else:
             return '(No image)'
     image_preview1.short_description = "Ön izleme 1"
@@ -226,7 +226,7 @@ class InventoryAdmin(admin.ModelAdmin):
 
     def category_image_preview(self, obj):
         if obj.category_image:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.category_image.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.category_image.url))
         else:
             return '(No image)'
 
@@ -347,7 +347,7 @@ class InventoryInline(NestedStackedInline):
 
     def category_image_preview(self, obj):
         if obj.category_image:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.category_image.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.category_image.url))
         else:
             return '(No image)'
 
@@ -389,27 +389,27 @@ class ProductIdentificationAdmin(admin.ModelAdmin):
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image_one:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_one.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_one.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image_two:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_two.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_two.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image_three:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_three.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_three.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         if obj.image_four:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image_four.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_four.url))
         else:
             return '(No image)'
 
@@ -644,28 +644,28 @@ class ProductOutletAdmin(admin.ModelAdmin):
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image1:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image1.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image1.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image2:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image2.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image2.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         # ex. the name of column is "image"
         if obj.image3:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image3.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image3.url))
         else:
             return '(No image)'
     image_preview1.short_description = "Ön izleme 1"
@@ -741,28 +741,28 @@ class ProductOutletAdmin(admin.ModelAdmin):
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image1:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image1.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image1.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image2:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image2.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image2.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         # ex. the name of column is "image"
         if obj.image3:
-            return mark_safe('<img src="{0}" width="150" height="150" style="object-fit:contain" />'.format(obj.image3.url))
+            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image3.url))
         else:
             return '(No image)'
     image_preview1.short_description = "Ön izleme 1"
