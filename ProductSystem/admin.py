@@ -115,7 +115,6 @@ class ProductIdentificationInline(NestedStackedInline):
     )
     readonly_fields = ['image_preview1','image_preview2','image_preview3','image_preview4',]
     
-    
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image_one:
@@ -286,7 +285,7 @@ class InventoryAdmin(admin.ModelAdmin):
         from django.db.models import Q
         qs = super(InventoryAdmin, self).get_queryset(request)
         if request.user.is_superuser or request.user.has_perm('ProductSystem.custom_permission'):
-            return qs
+            return qs        
         return qs.filter(~Q(product_category = 'Handcrafts'))
 
     # def get_form(self, request, obj=None, **kwargs):

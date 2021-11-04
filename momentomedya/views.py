@@ -19,3 +19,9 @@ def referencespage(request):
                   template_name = "momentomedya/references.html",
                   context = {}
                  )
+
+def careerpage(request):
+    return render(request = request,
+                  template_name = "momentomedya/career.html",
+                  context = {}
+                 )

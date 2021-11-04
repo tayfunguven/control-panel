@@ -1,0 +1,82 @@
+{% extends 'base_web.html' %}
+{% load static %}
+
+{% block content %}
+
+<!--FORM SECITON-->
+<div class="container-career" id="career" data-background="{% static 'momentomedya/img/image-message.jpg' %}" style="background-image:url({% static 'momentomedya/Assets/css/img/image-message.jpg' %})">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="container bg-light">
+                <div class="row">
+                    <div class="col-1">
+                        <div class="verticalText">
+                            KARİYER
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4>Bize mesaj gönderin...</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="heading-underline-career"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                            <form class="form-area">
+                                <div class="form-group">
+                                    <label for="inputName">İsim</label>
+                                    <input type="text" class="form-control" id="inputName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSurname">Soyisim</label>
+                                    <input type="text" class="form-control" id="inputSurname">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputEmail">E-posta Adresi</label>
+                                    <input type="email" class="form-control" id="inputEmail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputPhone">Cep Telefonu</label>
+                                    <input type="tel" class="form-control" id="inputPhone">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputMessage">Mesajınız</label>
+                                    <textarea class="form-control" id="inputMessage" rows="4"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputCV">Özgeçmişinizi yükleyin</label>
+                                    <input type="file" class="form-control-file" id="inputCV">
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                        <div class="row justify-content-left">
+                            <div class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        <a href="#">KVKK Metnini</a> okudum ve onaylıyorum.
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row justify-content-left">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-primary" style="background-color:rgb(41, 71, 95); border-color: rgb(41, 71, 95);">Gönder</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+</div>
+<!--END FORM SECTION-->
+
+{% endblock %}
