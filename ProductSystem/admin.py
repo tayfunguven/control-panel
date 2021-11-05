@@ -147,8 +147,6 @@ class ProductIdentificationInline(NestedStackedInline):
     image_preview3.short_description = "Ön izleme 3"
     image_preview4.short_description = "Ön izleme 4"
 
-    
-
 class InventoryAdmin(admin.ModelAdmin):
     #resource_class = InventoryResource
     inlines = [ProductIdentificationInline,]
@@ -320,9 +318,7 @@ class InventoryInline(NestedStackedInline):
     max_num = 1
     inlines = [ProductIdentificationInline]
     raw_id_fields = ('product_id',)
-
     # raw_id_fields = ('additional_number',)
-
     fieldsets = (
         ('Envanter Bilgisi', {
             'fields': (('product_id', 'product_name', 'product_code'),('product_category', 'product_sub_category', 'category_image_preview'), ('recommended_price','money_unit'), 'inventory_checked','product_quantity', 'description',)
@@ -334,11 +330,9 @@ class InventoryInline(NestedStackedInline):
         #     'fields': ('additional_number',),
         # }),
     )
-    
     formfield_overrides = {
         models.TextField: {'widget' : Textarea (attrs={'rows':3, 'cols':30})},
         models.CharField: {'widget' : TextInput(attrs={'size':30})}
-
     }
     list_editable = ('recommended_price', 'description', 'money_unit')
     #resource_class = InventoryResource
@@ -349,7 +343,6 @@ class InventoryInline(NestedStackedInline):
             return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.category_image.url))
         else:
             return '(No image)'
-
     category_image_preview.short_description = "Gorsel"
 
 class ProductIdentificationAdmin(admin.ModelAdmin):
@@ -368,7 +361,6 @@ class ProductIdentificationAdmin(admin.ModelAdmin):
     list_display_links = (
         'additional_serial',
         'additional_internal',
-     
         'additional_description',
         # 'product_codes'
     )
@@ -429,12 +421,8 @@ class ProductIdentificationAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
     # def product_codes(self, obj):
-        
     #     return ", ".join({p.product_code for p in additional_id.inventory_additional_ids.all()})
     # product_codes.short_description = "Ürün Kodu"
-
-
-
 
 class ProductEntryAdmin(NestedModelAdmin):
     inlines = [InventoryInline]

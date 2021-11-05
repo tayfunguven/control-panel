@@ -1,15 +1,18 @@
+import sys, os
+import string
 from typing import ValuesView
 from django.db import models, transaction
 from datetime import datetime
 from django.db.models.deletion import CASCADE
-import sys, os
-import string
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.crypto import get_random_string
-from django.core.validators import RegexValidator
-
 from GeneralModel.models import Firm, FirmAuthorizedPerson, DeliveryCompany
+from django.contrib.auth.models import Permission
+from django.contrib.contenttypes.models import ContentType
+
+# content_type = ContentType.objects.get(app_label='ProductSystem', model='ProductCategory')
+# permission = Permission.objects.create(codename='can_view_category', name='Can View Category', content_type=content_type)
 
 ##########################################
 ##########    OTHER MODELS    ############
@@ -92,8 +95,6 @@ class WarehouseInfo(models.Model):
         verbose_name = "Depo Bilgisi"
         verbose_name_plural = "Depo Bilgileri"
 
-
-
 ##########################################
 ##########    INVENTORY CARD    ##########
 ########################################## 
@@ -133,7 +134,6 @@ class InventoryCard(models.Model):
         verbose_name = ("Stok Kartı")
         verbose_name_plural = ("Stok Kartları")
 
-
 ##########################################
 ###########     INVENTORY     ############
 ##########################################
@@ -151,9 +151,6 @@ class ProductIdentificationImages(models.Model):
     class Meta:
         verbose_name = "Ek Numara Ürün Görseli"
         verbose_name_plural = "Ek Numara Ürün Görselleri"
-
-
-
 
 ##########################################
 ##########    PRODUCT ENTRY    ###########
@@ -295,11 +292,8 @@ class Inventory(models.Model):
     class Meta:
         verbose_name = ("Envanter Kaydı")
         verbose_name_plural = ("Envanter")
-    #     permissions = [
-    #         ('edit_inventory_warehouse_location', 'DENEME EDIT PERMISSION'),
-    #     ]
         permissions = [
-            ('custom_permission', 'Custom View Permission')
+            ('custom_permission', 'Custom View Permission'),
         ]
 
 class ProductIdentification(models.Model):
@@ -562,9 +556,4 @@ class ProductOutlet(models.Model):
     class Meta:
         verbose_name = "Ürün Çıkışı"
         verbose_name_plural = "Ürün Çıkışları"
-        
-   
-        
-
-        
         
