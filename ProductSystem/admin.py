@@ -4,8 +4,9 @@ from django.utils.safestring import mark_safe
 from django.forms import TextInput, Textarea
 from ProductSystem.resources import InventoryCardResource, InventoryResource
 from import_export.admin import ImportExportModelAdmin
-from django.contrib.auth.models import Permission, User
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
+from django.contrib.auth.models import Permission, User
+from django.contrib.contenttypes.models import ContentType
 
 class InventoryCardAdmin(ImportExportModelAdmin):
     list_display = (
@@ -40,12 +41,6 @@ class InventoryCardAdmin(ImportExportModelAdmin):
     readonly_fields = ['image_preview1','image_preview2','image_preview3','image_preview4',]
 
     resource_class = InventoryCardResource
-    # fields = (
-    #     ('product_code', 'product_name',),
-    #     'product_category', 'technical_info',
-    #     ('image_one', 'image_two'), ('image_three', 'image_four'),
-    #     ('image_preview1','image_preview2','image_preview3','image_preview4'),
-    # )
 
     fieldsets = (
         ('Ürün Bilgileri', {
@@ -162,13 +157,7 @@ class InventoryAdmin(admin.ModelAdmin):
         'inventory_checked',
         'description',
         'category_image_preview'
-        #'tested_status',
-        # 'warehouse_info',
-        # 'additional_serials',
-        # 'additional_internals',
     )
-
-    # raw_id_fields = ('additional_number',)
 
     fieldsets = (
         ('Envanter Bilgisi', {
@@ -177,25 +166,17 @@ class InventoryAdmin(admin.ModelAdmin):
         ('', {
             'fields': (('warehouse_location', 'shelf_info'), ('shelf_no', 'shelf_product_x_axis', 'shelf_product_y_axis'),)
         }),
-        # ('Ürün Kimlik Bilgileri', {
-        #     'fields': ('additional_number',),
-        # }),
     )
 
     list_display_links = (
         'product_code',
         'product_name',
         'product_quantity',
-        #'warehouse',
-        # 'inventory_checked',
-        # 'additional_serials',
-        # 'additional_internals',
     )
     
     formfield_overrides = {
         models.TextField: {'widget' : Textarea (attrs={'rows':3, 'cols':30})},
         models.CharField: {'widget' : TextInput(attrs={'size':30})}
-
     }
 
     search_fields = (
@@ -203,22 +184,20 @@ class InventoryAdmin(admin.ModelAdmin):
         'product_name',
         'id_images__additional_internal',
         'id_images__additional_serial',
-        #'warehouse',
         'inventory_checked',
         'description',
-        # 'additional_serials',
-        # 'additional_internals',
-        # 'additional_numbers'
     )
+
     show_change_link = True
+
     list_filter = (
-        #'warehouse',
         'inventory_checked',
         'product_category',
         'product_sub_category'
     )
+
     list_editable = ('recommended_price', 'description', 'money_unit')
-    #resource_class = InventoryResource
+
     readonly_fields = ('product_code', 'product_name', 'product_category', 'product_sub_category', 'category_image_preview')
 
     def category_image_preview(self, obj):
@@ -286,39 +265,13 @@ class InventoryAdmin(admin.ModelAdmin):
             return qs        
         return qs.filter(~Q(product_category = 'Handcrafts'))
 
-    # def get_form(self, request, obj=None, **kwargs):
-    #     print('ID INLINE PERMISSION: {0}'.format(request.user.has_perm('ProductSystem.custom_permission')))
-    #     if request.user.has_perm('ProductSystem.custom_permission'):
-    #         self.fieldsets[0][1]["fields"] = (('additional_serial', 'additional_internal'), ('product_status','tested_status'), ('additional_description','test_result_description'),)
-    #         self.fieldsets[1][1]["fields"] = (('image_one', 'image_two'), ('image_three', 'image_four'),),
-    #         self.fieldsets[2][1]["fields"] = (('image_preview1','image_preview2','image_preview3','image_preview4'),),
-    #         form = super(ProductIdentificationInline,self).get_form(request, obj, **kwargs)
-    #         return form 
-    #     else:
-    #         self.exclude = ('tested_status', 'test_result_description', 'image_one', 'image_two', 'image_three', 'image_four')
-    #         ## Dynamically overriding
-    #         self.fieldsets[0][1]["fields"] = (('additional_serial', 'additional_internal'), ('product_status'), ('additional_description',),)
-    #         self.fieldsets[1][1]["fields"] = ()
-    #         self.fieldsets[2][1]["fields"] = (('image_preview1','image_preview2','image_preview3','image_preview4'),),
-    #         form = super(ProductIdentificationInline,self).get_form(request, obj, **kwargs)
-    #         return form  
-    #filter_horizontal = ('additional_number',)
-
-    # def additional_serials(self, obj):
-    #     return ", ".join({p.additional_serial for p in obj.additional_number.all()})
-    # additional_serials.short_description = "Seri Numaraları"
-
-    # def additional_internals(self, obj):
-    #     return ", ".join({p.additional_internal for p in obj.additional_number.all()})
-    # additional_internals.short_description = "Dahili Numaraları"
-
 class InventoryInline(NestedStackedInline):
     fk_name = 'product_entry'
     model = Inventory
     max_num = 1
     inlines = [ProductIdentificationInline]
     raw_id_fields = ('product_id',)
-    # raw_id_fields = ('additional_number',)
+
     fieldsets = (
         ('Envanter Bilgisi', {
             'fields': (('product_id', 'product_name', 'product_code'),('product_category', 'product_sub_category', 'category_image_preview'), ('recommended_price','money_unit'), 'inventory_checked','product_quantity', 'description',)
@@ -326,16 +279,13 @@ class InventoryInline(NestedStackedInline):
         ('', {
             'fields': (('warehouse_location', 'shelf_info'), ('shelf_no', 'shelf_product_x_axis', 'shelf_product_y_axis'),)
         }),
-        # ('Ürün Kimlik Bilgileri', {
-        #     'fields': ('additional_number',),
-        # }),
     )
     formfield_overrides = {
         models.TextField: {'widget' : Textarea (attrs={'rows':3, 'cols':30})},
         models.CharField: {'widget' : TextInput(attrs={'size':30})}
     }
     list_editable = ('recommended_price', 'description', 'money_unit')
-    #resource_class = InventoryResource
+
     readonly_fields = ('product_code', 'product_name', 'product_category', 'product_sub_category', 'category_image_preview')
 
     def category_image_preview(self, obj):
@@ -362,7 +312,6 @@ class ProductIdentificationAdmin(admin.ModelAdmin):
         'additional_serial',
         'additional_internal',
         'additional_description',
-        # 'product_codes'
     )
     
     fieldsets = (
@@ -427,9 +376,8 @@ class ProductIdentificationAdmin(admin.ModelAdmin):
 class ProductEntryAdmin(NestedModelAdmin):
     inlines = [InventoryInline]
     raw_id_fields = ('company',)
-    #autocomplete_fields = ['product_id', 'company', 'delivery_company']
+
     list_display = (
-        #'product_id',
         'product_name',
         'product_code',
         'product_category',
@@ -441,10 +389,7 @@ class ProductEntryAdmin(NestedModelAdmin):
         'date_interval',
         'description',
         'company',
-        # 'company_authorized',
         'delivery_company',
-        
-        # 'deliverer'
     )
     def product_name(self, obj):
         return ", ".join([
@@ -466,9 +411,8 @@ class ProductEntryAdmin(NestedModelAdmin):
     product_category.short_description = "Kategori"
 
     filter_horizontal = ('company_authorized',)
-    #filter_vertical = ('deliverer', 'company_authorized')
+
     list_display_links = (
-        #'product_id',
         'product_name',
         'product_code',
         'product_category',
@@ -479,15 +423,11 @@ class ProductEntryAdmin(NestedModelAdmin):
         'purchase_price',
         'description',
         'company',
-        # 'company_authorized',
         'delivery_company',
-        # 'deliverer'
     )
 
     search_fields = (
         'description',
-        # 'company_authorized',
-        # 'deliverer'
     )
     
     fieldsets = (
@@ -509,161 +449,6 @@ class ProductEntryAdmin(NestedModelAdmin):
         'arrival_reason',
     )
 
-
-'''class ProductOutletAdmin(admin.ModelAdmin):
-    raw_id_fields = ['product_id', 'company', 'delivery_company',]
-    filter_horizontal = ['company_authorized', 'deliverer']
-    list_display = (
-        'product_id',
-        'departure_reason',
-        'date_departure',
-        'date_interval',
-        'quantity',
-        'selling_price',
-        'money_unit',
-        'image',
-        'description',
-        'company',
-        # 'company_authorized',
-        'delivery_company',
-        # 'deliverer'
-    )
-
-    list_display_links = (
-        'product_id',
-        'departure_reason',
-        'date_departure',
-        'date_interval',
-        'quantity',
-        'selling_price',
-        'money_unit',
-        'image',
-        'description',
-        'company',
-        # 'company_authorized',
-        'delivery_company',
-        # 'deliverer'
-    )
-
-    search_fields = (
-        'description',
-        # 'company_authorized',
-        # 'deliverer'
-    )
-
-    list_filter = (
-        'departure_reason',
-    )
-    fieldsets = (
-        ('Giris Bilgeri', {
-            'fields': (('product_id', 'departure_reason'), ('date_departure','date_interval'),('selling_price','money_unit',), 'quantity','description', ('image','image1'),('image2','image3'))
-        }),
-        ('Firma Bilgileri', {
-            'fields': (('company', 'company_authorized'),)
-        }),
-        ('Teslimat Bilgileri', {
-            'fields': (('delivery_company', 'deliverer'),)
-        }),
-    )
-'''
-'''
-class ProductOutletAdmin(admin.ModelAdmin):
-    raw_id_fields = ['company',]
-    filter_horizontal = ['company_authorized', 'product_id', 'product_id_inv']
-    list_display = (
-        'departure_reason',
-        'date_departure',
-        'date_interval',
-        'quantity',
-        'selling_price',
-        'money_unit',
-        'image_preview1',
-        'description',
-        'company',
-        # 'company_authorized',
-        'delivery_company',
-        # 'deliverer'
-    )
-
-    list_display_links = (
-        'departure_reason',
-        'date_departure',
-        'date_interval',
-        'quantity',
-        'selling_price',
-        'money_unit',
-        'image_preview1',
-        'description',
-        'company',
-        # 'company_authorized',
-        'delivery_company',
-        # 'deliverer'
-    )
-
-    search_fields = (
-        'description',
-        # 'company_authorized',
-        # 'deliverer'
-    )
-
-    list_filter = (
-        'departure_reason',
-    )
-    readonly_fields = ('image_preview1','image_preview2', 'image_preview3', 'image_preview4')
-    fieldsets = (
-        ('Cikis Bilgeri', {
-            'fields': ('has_serial','product_id','product_id_inv','departure_reason', ('date_departure','date_interval'),('selling_price','money_unit',), 'quantity','description')
-        }),
-        ('Görsel Yükle', {
-            'fields': (('image', 'image1'), ('image2', 'image3'),),
-        }),
-        ('Görsel Ön izleme', {
-            'fields': (('image_preview1','image_preview2','image_preview3','image_preview4'),),
-        }),
-        ('Firma Bilgileri', {
-            'fields': (('company', 'company_authorized'),)
-        }),
-        ('Teslimat Bilgileri', {
-            'fields': (('delivery_company', 'delivery_code', 'delivery_warehouse_receipt_document'),)
-        }),
-    )
-
-    def image_preview1(self, obj):
-        # ex. the name of column is "image"
-        if obj.image:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image.url))
-        else:
-            return '(No image)'
-
-    def image_preview2(self, obj):
-        # ex. the name of column is "image"
-        if obj.image1:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image1.url))
-        else:
-            return '(No image)'
-
-    def image_preview3(self, obj):
-        # ex. the name of column is "image"
-        if obj.image2:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image2.url))
-        else:
-            return '(No image)'
-    
-    def image_preview4(self, obj):
-        # ex. the name of column is "image"
-        if obj.image3:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image3.url))
-        else:
-            return '(No image)'
-    image_preview1.short_description = "Ön izleme 1"
-    image_preview2.short_description = "Ön izleme 2"
-    image_preview3.short_description = "Ön izleme 3"
-    image_preview4.short_description = "Ön izleme 4"
-
-    class Media:
-        js = ('/static/admin/js/hide_attribute.js',)
-'''
-
 class ProductOutletAdmin(admin.ModelAdmin):
     raw_id_fields = ['company', 'product_id', 'product_id_inv']
     filter_horizontal = ['company_authorized',]
@@ -677,9 +462,7 @@ class ProductOutletAdmin(admin.ModelAdmin):
         'image_preview1',
         'description',
         'company',
-        # 'company_authorized',
         'delivery_company',
-        # 'deliverer'
     )
 
     list_display_links = (
@@ -692,15 +475,11 @@ class ProductOutletAdmin(admin.ModelAdmin):
         'image_preview1',
         'description',
         'company',
-        # 'company_authorized',
         'delivery_company',
-        # 'deliverer'
     )
 
     search_fields = (
         'description',
-        # 'company_authorized',
-        # 'deliverer'
     )
 
     list_filter = (
@@ -772,4 +551,3 @@ admin.site.register(InventoryCard, InventoryCardAdmin)
 admin.site.register(Inventory, InventoryAdmin)
 admin.site.register(ProductEnrty, ProductEntryAdmin)
 admin.site.register(ProductOutlet, ProductOutletAdmin)
-#admin.site.register(Permission)

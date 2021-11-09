@@ -1,22 +1,13 @@
 import sys, os
 import string
-from typing import ValuesView
 from django.db import models, transaction
 from datetime import datetime
-from django.db.models.deletion import CASCADE
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.crypto import get_random_string
 from GeneralModel.models import Firm, FirmAuthorizedPerson, DeliveryCompany
-from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 
-# content_type = ContentType.objects.get(app_label='ProductSystem', model='ProductCategory')
-# permission = Permission.objects.create(codename='can_view_category', name='Can View Category', content_type=content_type)
-
-##########################################
-##########    OTHER MODELS    ############
-########################################## 
 
 MONEY_UNIT = [
     ('TRY','TRY'),
@@ -39,6 +30,13 @@ class ProductCategory(models.Model):
     category_id = models.BigAutoField(primary_key=True, verbose_name="Kategori Kodu")
     category_name = models.CharField("Kategori Adı", max_length=150, blank=False, null=False)
 
+    def save(self, *args, **kwargs):
+        super(ProductCategory, self).save(*args, **kwargs)
+        #content_type = ContentType.objects.all()
+        content_type = ContentType.objects.filter(app_label='ProductSystem')
+        for content in content_type:
+            print(content, '\n')
+        
     def __str__(self):
         return str(self.category_name)
 
@@ -80,49 +78,16 @@ class DepartureReason(models.Model):
         verbose_name = "Gidiş Nedeni"
         verbose_name_plural = "Gidiş Nedenleri"
 
-class WarehouseInfo(models.Model):
-    warehouse_id = models.BigAutoField(primary_key=True, verbose_name="Depo Kodu")
-    warehouse_location = models.CharField("Lokasyon", max_length=300, blank=False, null=False)
-    shelf_info = models.CharField("Raf Bilgisi", max_length=200, blank=False, null=False)
-    shelf_no = models.CharField("Raf No", max_length=20)
-    shelf_product_x_axis = models.IntegerField("Sütun (Column)", help_text="", blank=False, null=False)
-    shelf_product_y_axis = models.IntegerField("Satır (Row)", help_text="", blank=False, null=False)
-
-    def __str__(self):
-        return "Raf No: " + str(self.shelf_no) + " - " + str(self.shelf_product_y_axis) + "/" + str(self.shelf_product_x_axis) + " - "  + str(self.shelf_info)
-
-    class Meta:
-        verbose_name = "Depo Bilgisi"
-        verbose_name_plural = "Depo Bilgileri"
-
-##########################################
-##########    INVENTORY CARD    ##########
-########################################## 
-
-class InventoryCardImageSet(models.Model):
-    image_set_id = models.BigAutoField(primary_key=True, verbose_name="Görsel Set Kodu")
-    image_one = models.ImageField("Görsel 1", upload_to="stock_card_images/product {InventoryCard}", blank=False, null=False)
-    image_two = models.ImageField("Görsel 2", upload_to="stock_card_images/product {InventoryCard.product_code}", blank=True, null=True)
-    image_three = models.ImageField("Görsel 3", upload_to="stock_card_images/product {InventoryCard.product_code}", blank=True, null=True)
-    image_four = models.ImageField("Görsel 4", upload_to="stock_card_images/product {InventoryCard.product_code}", blank=True, null=True)
-
-    def __str__(self):
-        return str(self. image_set_id) 
-
-    class Meta:
-        verbose_name = ("Görsel Seti")
-        verbose_name_plural = ("Görsel Setleri")
-
 class InventoryCard(models.Model):
     card_id = models.BigAutoField(primary_key=True, verbose_name="Kart Kodu")
-    product_code = models.CharField("Ürün Kodu", max_length=1000, blank=True, null=True)
-    product_name = models.CharField("Ürün Adı", max_length=1000, blank=True, null=True)
+    product_code = models.CharField("Ürün Kodu", max_length=1000, blank=False, null=False)
+    product_name = models.CharField("Ürün Adı", max_length=1000, blank=False, null=False)
     product_category = models.ForeignKey(ProductCategory, related_name="categories", on_delete=models.CASCADE, blank=True, null=True, verbose_name="Kategori")
     sub_category = models.ForeignKey(ProductSubCategory, related_name="sub_categories", on_delete=models.CASCADE, blank=True, null=True, verbose_name="Alt Kategori")
     technical_info = models.TextField("Teknik Bilgiler", blank=True, null=True)
     datasheet_document = models.FileField("Datasheet", upload_to="PRODUCT DATASHEETS", null=True, blank=True)
     #image_set = models.ForeignKey(InventoryCardImageSet, related_name="ic_images", blank=True, null=True, verbose_name="Görsel Seti", on_delete=models.CASCADE)
-    image_one = models.ImageField("Görsel 1", upload_to="InventoryCard/Images", blank=True, null=True)
+    image_one = models.ImageField("Görsel 1", upload_to="InventoryCard/Images", blank=False, null=False)
     image_two = models.ImageField("Görsel 2", upload_to="InventoryCard/Images", blank=True, null=True)
     image_three = models.ImageField("Görsel 3", upload_to="InventoryCard/Images", blank=True, null=True)
     image_four = models.ImageField("Görsel 4", upload_to="InventoryCard/Images", blank=True, null=True)
@@ -133,28 +98,6 @@ class InventoryCard(models.Model):
     class Meta:
         verbose_name = ("Stok Kartı")
         verbose_name_plural = ("Stok Kartları")
-
-##########################################
-###########     INVENTORY     ############
-##########################################
-
-class ProductIdentificationImages(models.Model):
-    image_set_id = models.BigAutoField(primary_key=True, verbose_name="Görsel Set Kodu")
-    image_one = models.ImageField("Görsel 1", upload_to="product_identification_images/product {Inventory.product_code}", blank=True, null=True)
-    image_two = models.ImageField("Görsel 2", upload_to="product_identification_images/product {Inventory.product_code}", blank=True, null=True)
-    image_three = models.ImageField("Görsel 3", upload_to="product_identification_images/product {Inventory.product_code}", blank=True, null=True)
-    image_four = models.ImageField("Görsel 4", upload_to="product_identification_images/product {Inventory.product_code}", blank=True, null=True)
-
-    def __str__(self):
-        return str(self.image_set_id)
-
-    class Meta:
-        verbose_name = "Ek Numara Ürün Görseli"
-        verbose_name_plural = "Ek Numara Ürün Görselleri"
-
-##########################################
-##########    PRODUCT ENTRY    ###########
-########################################## 
 
 class QuantityCache(models.Model):
     object_id = models.CharField("ID of the Object", max_length=200, blank=False, null=False)
@@ -194,12 +137,8 @@ class ProductEnrty(models.Model):
         verbose_name = ("Ürün Girişi")
         verbose_name_plural = ("Ürün Girişleri")
 
-##########################################
-##########    PRODUCT OUTLET    ##########
-########################################## 
-
 class Inventory(models.Model):
-    product_id = models.ForeignKey(InventoryCard, related_name="inventory_entry", on_delete=models.CASCADE, verbose_name="Stok Kartı", blank=True, null=True)
+    product_id = models.ForeignKey(InventoryCard, related_name="inventory_entry", on_delete=models.CASCADE, verbose_name="Stok Kartı", blank=False, null=False)
     product_code = models.CharField("Kod", max_length=200, unique=False)
     product_name = models.CharField("Cihaz Adı", max_length=1000, blank=True, null=True)
     product_category = models.CharField("Kategori", max_length=300, blank=True, null=True)
@@ -207,7 +146,6 @@ class Inventory(models.Model):
     category_image = models.ImageField("Gorsel", editable=False, blank=True, null=True, upload_to='InventoryCard/Images')
     recommended_price = models.DecimalField("Tavsiye Edilen Birim Fiyatı", max_digits=20, decimal_places=2, blank=True,null=True)
     money_unit = models.CharField("Para Birimi", max_length=10, default=MONEY_UNIT[0][0], choices=MONEY_UNIT, blank=True, null=True)
-    warehouse_info = models.ForeignKey(WarehouseInfo, related_name="ids_warehouse_infos", on_delete=models.CASCADE, blank=True, null=True, verbose_name="Depo Bilgileri")
     product_quantity = models.IntegerField("Miktar", default=1, blank=True,null=True)
     warehouse_location = models.CharField("Lokasyon", max_length=300, blank=True, null=True)
     shelf_info = models.CharField("Raf Bilgisi", max_length=200, blank=True, null=True)
@@ -315,22 +253,6 @@ class ProductIdentification(models.Model):
     class Meta:
         verbose_name = ("Urun Kimligi")
         verbose_name_plural = ("Urun Kimlikleri")
-
-class InventoryImages(models.Model):
-    image_set_id = models.BigAutoField(primary_key=True, verbose_name="Görsel Set Kodu")
-    inventory_id = models.ForeignKey(Inventory, related_name="inventory_ids", on_delete=models.CASCADE, verbose_name="Stok Kartı")
-    image_one = models.ImageField("Görsel 1", upload_to="stock_card_images/product {Inventory.product_code}", blank=True, null=True)
-    image_two = models.ImageField("Görsel 2", upload_to="stock_card_images/product {Inventory.product_code}", blank=True, null=True)
-    image_three = models.ImageField("Görsel 3", upload_to="stock_card_images/product {Inventory.product_code}", blank=True, null=True)
-    image_four = models.ImageField("Görsel 4", upload_to="stock_card_images/product {Inventory.product_code}", blank=True, null=True)
-
-    def __str__(self):
-        return str(self.image_set_id)
-
-    class Meta: 
-        verbose_name = "Envanter Görseli"
-        verbose_name_plural = "Envanter Görselleri"
-
 '''
 class ProductOutlet(models.Model):
     def user_directory_path(instance, filename):
@@ -366,7 +288,6 @@ class ProductOutlet(models.Model):
         verbose_name = "Ürün Çıkışı"
         verbose_name_plural = "Ürün Çıkışları"
 '''
-
 class ProductOutlet(models.Model):
     def user_directory_path(instance, filename):
         return 'PRODUCT SYSTEM DOCUMENTS/{0}/{1}'.format(instance.outlet_id, filename)
@@ -377,11 +298,11 @@ class ProductOutlet(models.Model):
     has_serial = models.BooleanField('Dahili no ile ara', blank=True,)
     product_id = models.ForeignKey(ProductIdentification, related_name="product_outlet_id", verbose_name="Ürün Dahili No", blank=True, null=True, on_delete=models.CASCADE)
     product_id_inv = models.ForeignKey(Inventory, related_name="product_outlet_id", verbose_name="Ürün Adi", blank=True, null=True, on_delete=models.CASCADE)
-    departure_reason = models.ForeignKey(DepartureReason, related_name="departure_reasons", on_delete=models.CASCADE, verbose_name="Gidiş Nedeni", blank=True, null=True)
+    departure_reason = models.ForeignKey(DepartureReason, related_name="departure_reasons", on_delete=models.CASCADE, verbose_name="Gidiş Nedeni", blank=False, null=False)
     date_departure = models.DateField("İşlem Tarihi", default=datetime.date(datetime.now()), blank=True, null=True)
     date_interval = models.IntegerField("Ne Kadar Duracak", default=0, blank=True, null=True)
     quantity = models.IntegerField("Adet", blank=True, null=True, default=1)
-    selling_price = models.DecimalField("Fiyat", blank=True, null=True, max_digits=20, decimal_places=2)
+    selling_price = models.DecimalField("Fiyat", blank=False, null=False, max_digits=20, decimal_places=2)
     money_unit = models.CharField("Para Birimi", max_length=10, default=MONEY_UNIT[0][0], choices=MONEY_UNIT, blank=True, null=True)
     image = models.ImageField("Görsel", upload_to=user_directory_path, blank=True, null=True)
     image1 = models.ImageField("Görsel 2", upload_to=user_directory_path, blank=True, null=True)
@@ -397,7 +318,7 @@ class ProductOutlet(models.Model):
     def clean(self, *args, **kwargs):
         errors={}
 
-        product = self.product_id
+        '''product = self.product_id
         if product is None:
             product_ids = self.product_id_inv
             inventory_object = Inventory.objects.get(pk = product_ids.pk)
@@ -412,7 +333,14 @@ class ProductOutlet(models.Model):
             if self.quantity > current_quantity :
                 errors['quantity']=ValidationError('Envanterde istenilen sayıda seçilen ürün bulunmamaktadır!')
             if errors:
-                raise ValidationError(errors)
+                raise ValidationError(errors)'''
+
+        if self.product_id is None or self.product_id_inv is None:
+            if self.product_id is None:
+                errors['product_id'] = ValidationError('En az bir urun seciniz!')
+            if self.product_id_inv is None:
+                errors['product_id_inv'] = ValidationError('En az bir urun seciniz!')
+            raise ValidationError(errors)
 
     def save(self, *args, **kwargs):
         product = self.product_id
