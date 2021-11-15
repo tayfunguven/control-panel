@@ -6,6 +6,7 @@
 <link rel="icon" href="{% static 'admin/img/icon-tab.png'  %}" />
 <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
 
+
 {% if not is_popup and is_nav_sidebar_enabled %}
   <link rel="stylesheet" type="text/css" href="{% static "admin/css/nav_sidebar.css" %}">
   <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
@@ -63,7 +64,7 @@
     </div> 
     <!-- END Header -->
     <!--DUYURU:-->
-    <style>
+    {% comment %} <style>
       div.slide-left {
         width:100%;
         overflow:hidden;
@@ -88,7 +89,7 @@
           width: 100%;
         }
       }
-    </style>
+    </style> {% endcomment %}
     {% for group in request.user.groups.all  %}
       {% if user.is_authenticated and group.name != "Bayiler"%}
       <div class="slide-left" style="background-color: #FFFFBB;">

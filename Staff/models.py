@@ -128,7 +128,7 @@ class AuthorizedPerson (models.Model):
 class ReportContent(models.Model):
     content_id = models.BigAutoField(primary_key=True)
     title = models.CharField("Başlık", max_length = 150, blank=False, null=False)
-    job_type = models.ForeignKey(JobType, related_name="job_types", on_delete=models.CASCADE, blank=False, null=False, verbose_name="İş Türü")
+    job_type = models.ManyToManyField(JobType, related_name="job_types", blank=False, null=False, verbose_name="İş Türü")
     job_status = models.CharField("İş Statüsü", max_length=50, blank=False, null=False, choices=JOB_STATUS)
     #company_info = models.ForeignKey(Company, related_name="companies", on_delete=models.CASCADE, blank=False, null=False)
     work_progress = models.CharField("İş durumu", max_length=100, blank=False, null=False, choices=WORK_PROGRESS)
@@ -145,7 +145,6 @@ class ReportContent(models.Model):
     class Meta:
         verbose_name = "Rapor İçeriği"
         verbose_name_plural = ""
-
 
 # class TopLevel(models.Model):
 #     name = models.CharField(max_length=200)
@@ -207,3 +206,10 @@ class PermitRequest(models.Model):
     class Meta:
         verbose_name = ("İzin Talebi")
         verbose_name_plural = ("İzin Talepleri")
+
+
+class CalendarReport(ReportContent):
+    class Meta:
+        proxy = True
+        verbose_name = 'Rapor'
+        verbose_name_plural = 'Raporlar'

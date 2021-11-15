@@ -4,6 +4,7 @@ from django.contrib.admin.options import InlineModelAdmin, TabularInline
 from django.db import models
 from django.db.models.expressions import OuterRef
 from django.db.models.fields import TextField
+from Staff.models import CalendarReport
 from Staff.models import *
 from import_export.admin import ImportExportModelAdmin
 from django.forms import TextInput, Textarea
@@ -234,7 +235,7 @@ class ReportContentInline(NestedStackedInline):
             'fields': ('company', 'company_authorized'),
         }),
     )
-    filter_horizontal = ('company', 'company_authorized', 'related_person',)
+    filter_horizontal = ('job_type', 'company', 'company_authorized', 'related_person',)
 
     class Media:
         css = {
@@ -405,3 +406,50 @@ admin.site.register(AdvanceRequest, AdvanceRequestAdmin)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(JobType)
 admin.site.register(AuthorizedPerson, AuthorizedPersonAdmin)
+
+
+@admin.register(CalendarReport)
+class CalendarReportAdmin(admin.ModelAdmin):
+    change_list_template = 'admin/calendar_report.html'
+    
+    # def changelist_view(self, request, extra_context=None):
+    #     response = super().changelist_view(
+    #         request,
+    #         extra_context=extra_context,
+    #     )
+
+    #     try:
+    #         qs = response.context_data['cl'].queryset
+    #     except (AttributeError, KeyError):
+    #         return response
+
+    #     metrics = {
+            
+    #     }
+        
+    #     # response.context_data['summary'] = list(
+    #     #     qs
+    #     #     .values(
+    #     #         'income_code',
+    #     #         'income_name',
+    #     #         'amount',
+    #     #         'unit_id',
+    #     #         'currency_price',
+    #     #         'currency_type',
+    #     #         'price',
+    #     #         'subtotal',
+    #     #         'vat_rate',
+    #     #         'vat_amount',
+    #     #         'grand_total',
+    #     #         'log_date',
+    #     #         'user'
+    #     #     )
+    #     #     .annotate(**metrics)
+    #     #     .order_by('-log_date'),
+    #     # )
+        
+    #     # response.context_data['summary_total'] = dict(
+    #     #     qs.aggregate(**metrics),           
+    #     # )
+    #     return response
+    

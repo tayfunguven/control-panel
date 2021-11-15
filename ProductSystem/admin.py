@@ -551,3 +551,6 @@ admin.site.register(InventoryCard, InventoryCardAdmin)
 admin.site.register(Inventory, InventoryAdmin)
 admin.site.register(ProductEnrty, ProductEntryAdmin)
 admin.site.register(ProductOutlet, ProductOutletAdmin)
+
+
+

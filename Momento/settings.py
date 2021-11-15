@@ -77,7 +77,7 @@ INSTALLED_APPS = [
     'nested_admin',
     'nested_inline',
     'momentomedya.apps.MomentomedyaConfig',
-       
+    'Document.apps.DocumentConfig',
     # 'Staff.apps.StaffConfig'
 ]
 

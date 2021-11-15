@@ -157,6 +157,7 @@ class Inventory(models.Model):
     test_result_description = models.TextField("Test Açıklaması", blank=True, null=True)
     description = models.TextField("Açıklama", blank=True, null=True)
     product_entry = models.ForeignKey(ProductEnrty, on_delete=models.CASCADE, blank=True, null=True, related_name='inventory_entry', editable=False)
+    
     def save(self, *args, **kwargs):
         product = self.product_id
         #print(product)
@@ -484,4 +485,6 @@ class ProductOutlet(models.Model):
     class Meta:
         verbose_name = "Ürün Çıkışı"
         verbose_name_plural = "Ürün Çıkışları"
+
+
         
