@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'nested_inline',
     'momentomedya.apps.MomentomedyaConfig',
     'Document.apps.DocumentConfig',
+    'multiselectfield',
     # 'Staff.apps.StaffConfig'
 ]
 

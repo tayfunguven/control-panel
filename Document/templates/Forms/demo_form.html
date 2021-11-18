@@ -1,0 +1,105 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Demo Teslim Belgesi</title>
+  </head>
+  <body>
+    <!--HEADER-->
+    <div class="page-header" style="text-align: right;">
+        <div id="logo">
+            <img src="{% static 'pdffiles/logo-momentomedya.png' %}">
+            <h1>Demo Teslim</h1>
+        </div>
+    </div>
+    <!--END HEADER-->
+
+    <!--FOOTER-->
+    <div class="page=footer">
+        Momento Medya Sanayi ve Tic. A.Ş.
+        19 MAYIS MAH. 19 MAYIS CAD. NO:37/2 OFİS 7 UBM PLAZA ŞİŞLİ 34360 - İstanbul - Türkiye
+        Tel: +90 212 222 80 50 | info@momentomedya.com | www.momentomedya.com
+    </div>
+    <!--END FOOTER-->
+  </body>
+
+  <!--INFO-->
+  <!--END INFO-->
+
+  <!--TABLE-->
+  <table>
+      <thead>
+          <tr>
+              <td>
+                  <div class="page-header-space"></div>
+              </td>
+          </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+            <th>Ürün Seri No</th>
+            <th>Ürün Adi</th>
+            <th>Demo Süresi</th>
+            <th>Adet</th>
+            <td>
+
+            </td>
+        </tr>
+      </tbody>
+
+      <tfoot>
+          <div class="page-footer-space"></div>
+      </tfoot>
+  </table>
+  <!--END TABLE-->
+</html>
+
+
+
+
+
+
+
+
+
+{% comment %} 
+<html lang="tr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    </head>
+    <header>
+        <h1 style="text-align:center;">Demo Teslim</h1>
+    </header>
+    <body>
+        {% for document_info in document_infos %}
+            Referans No: {{ document_info.reference_no}}
+            Tarih: {{ document_info.date}}
+            Teslim Adresi: {{ document_info.delivery_address}} 
+            Musteri: {{ document_info.customer_company}}   
+            Ilgili: {{ document_info.related_person}}
+            Proje: {{ document_info.project}}       
+        {% endfor %}
+        <table>
+            <tr>
+                <th>Sira</th>
+                <th>Ürün Adi</th>
+                <th>Seri No</th>
+                <th>Dahili No</th>
+                <th>Demo Süresi</th>
+                <th>Adet</th>
+            </tr>  
+            {% for document_product in document_products %}
+                <tr>
+                    <td>{{ document_product.product_serial}}</td>
+                    <td>{{ document_product.product_name}}</td>
+                    <td>{{ document_product.demo_time}}</td>
+                    <td>{{ document_product.quantity}}</td>
+                </tr>               
+            {% endfor %}
+        </table>
+        
+    </body>
+</html> {% endcomment %}

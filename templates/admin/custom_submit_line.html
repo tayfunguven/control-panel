@@ -1,0 +1,14 @@
+{% load i18n admin_urls %}
+<div class="submit-row">
+{% if show_save %}<input type="submit" value="{% trans 'Kaydet' %}" class="default" name="_save" />{% endif %}
+{% if show_delete_link %}
+    {% url opts|admin_urlname:'delete' original.pk|admin_urlquote as delete_url %}
+    <p class="deletelink-box"><a href="{% add_preserved_filters delete_url %}" class="deletelink">{% trans "Sil" %}</a></p>
+{% endif %}
+{% if show_save_as_new %}<input type="submit" value="{% trans 'Yeni Olarak Kaydet' %}" name="_saveasnew" />{% endif %}
+{% if show_save_and_add_another %}<input type="submit" value="{% trans 'Kaydet ve Yeni Ekle' %}" name="_addanother" />{% endif %}
+{% if show_save_and_continue %}<input type="submit" value="{% trans 'Kaydet ve Düzenlemeye Devam Et' %}" name="_continue" />{% endif %}
+
+<input type="submit" style="background-color:red;" value="{% trans 'Yazdır' %}"  name="_customaction" />
+
+</div>

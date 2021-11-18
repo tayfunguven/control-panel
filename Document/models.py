@@ -2,12 +2,20 @@ from datetime import datetime
 from django.core.validators import RegexValidator
 from django.db import models
 from GeneralModel.models import Firm, FirmAuthorizedPerson
-from ProductSystem.models import ProductIdentification
-
+from ProductSystem.models import Inventory, ProductIdentification, ProductOutlet
+from multiselectfield import MultiSelectField
 # class RMAForm(models.Model):
 #     rma_id = models.BigAutoField(primary_key=True, verbose_name='RMA Id')
 #     rma_number = models.CharField('RMA Numarasi', max_length=20, blank=False, null=False)
 
+RMA_CHOICES = [
+    ('hasarli_govde','Hasarli Govde'),
+    ('hasarli_psu','Hasarli PSU'),
+    ('hasarli_io_port','Hasarli I/O | Port'),
+    ('hasarli_ekran_lcd','Hasarli Ekran | LCD'),
+    ('hasarli_tus','Hasarli Tus'),
+    ('diger','Diger'),
+]
 
 class DemoDeliveryForm(models.Model):
     reference_regex = RegexValidator(regex=r'^MM[A-Z]{2,8}-[0-9]{6}-[0-9]{3}$', message="Girmis oldugunuz referans numarasi uygun formatta degildir! (Ornek format: MMTYFN-010121-001)")
@@ -46,3 +54,26 @@ class DeviceDeliveryForm(models.Model):
     class Meta:
         verbose_name = 'Cihaz Teslim Formu'
         verbose_name_plural = 'Cihaz Teslim Belgeleri'
+
+class RMAForm(models.Model):
+    rma_no_regex = RegexValidator(regex=r'^RMA[A-Z]{2,8}-[0-9]{6}-[0-9]{3}$', message="Girmis oldugunuz RMA numarasi uygun formatta degildir! (Ornek format: RMATYFN-010121-001")
+
+    rma_form_id = models.BigAutoField(primary_key=True, verbose_name='Belge Id')
+    rma_number = models.CharField('RMA Numarasi', help_text="RMA numarasini 'RMA(ADINIZ)-(6 haneli tarih: GGAAYY)-(BELGE NO)' seklinde giriniz.", max_length=20, blank=False, null=False, validators=[rma_no_regex,])
+    log_date = models.DateTimeField('Tarih', default=datetime.now, blank=False)
+    client_company = models.ForeignKey(Firm, on_delete=models.CASCADE, blank=False, null=False, verbose_name='Musteri')
+    client_person = models.ForeignKey(FirmAuthorizedPerson, on_delete=models.CASCADE, blank=False, null=False, verbose_name='Ilgili')
+    entry = models.ForeignKey(Inventory, on_delete=models.CASCADE, blank=False, null=False, verbose_name='Urun Girisi')
+    entry_description = models.TextField('Aciklama', blank=False, null=False)
+    entry_analysis = MultiSelectField('Inceleme', choices=RMA_CHOICES)
+    other_chechked = models.CharField('Tanim', max_length=500)
+    entry_note = models.TextField('Not', blank=True, null=True)
+    outlet = models.ForeignKey(ProductOutlet, on_delete=models.CASCADE, blank=True, null=True, verbose_name='Urun Cikisi')
+    rma_description = models.TextField('Aciklama', blank=True, null=True)
+    
+    def __str__(self):
+        return str(self.rma_number)
+
+    class Meta:
+        verbose_name = 'RMA Formu'
+        verbose_name_plural = 'RMA Belgeleri'
