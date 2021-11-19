@@ -4,12 +4,27 @@
   <head>
     <meta charset="utf-8">
     <title>Demo Teslim Belgesi</title>
+    <style>
+        table {
+            counter-reset: rowNumber;
+        }
+
+        table tr {
+            counter-increment: rowNumber;
+        }
+
+        table tr td:first-child::before {
+            content: counter(rowNumber);
+            min-width: 1em;
+            margin-right: 0.5em;
+        }
+    </style>
   </head>
   <body>
     <!--HEADER-->
     <div class="page-header" style="text-align: right;">
         <div id="logo">
-            <img src="{% static 'pdffiles/logo-momentomedya.png' %}">
+            <img src="{% static '' %}">
             <h1>Demo Teslim</h1>
         </div>
     </div>
@@ -39,12 +54,20 @@
 
       <tbody>
         <tr>
-            <th>Ürün Seri No</th>
+            <th></th>
             <th>Ürün Adi</th>
+            <th>Ürün Seri No</th>
             <th>Demo Süresi</th>
             <th>Adet</th>
             <td>
-
+            {% for item in product_infos %}
+                <tr>
+                    <td>{{ item.additional_serial}}</td>
+                    <td>{{ item.additional_internal}}</td>
+                    <td>{{ item.product_status}}</td>
+                    <td>{{ item.additional_description}}</td>
+                </tr>               
+            {% endfor %}
             </td>
         </tr>
       </tbody>

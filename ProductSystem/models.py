@@ -144,6 +144,7 @@ class Inventory(models.Model):
     product_category = models.CharField("Kategori", max_length=300, blank=True, null=True)
     product_sub_category = models.CharField("Alt Kategori", max_length=300, blank=True, null=True)
     category_image = models.ImageField("Gorsel", editable=False, blank=True, null=True, upload_to='InventoryCard/Images')
+    product_datasheet = models.FileField("Datasheet", upload_to="PRODUCT DATASHEETS", null=True, blank=True)
     recommended_price = models.DecimalField("Tavsiye Edilen Birim Fiyatı", max_digits=20, decimal_places=2, blank=True,null=True)
     money_unit = models.CharField("Para Birimi", max_length=10, default=MONEY_UNIT[0][0], choices=MONEY_UNIT, blank=True, null=True)
     product_quantity = models.IntegerField("Miktar", default=1, blank=True,null=True)
@@ -166,23 +167,30 @@ class Inventory(models.Model):
         pro_name = product.product_name
         check = product.product_category
         check2 = product.sub_category
+        check3 = product.datasheet_document
         pro_category = ''
         pro_sub_category = ''
+
 
         if check is None:
             pro_category = '-'
         else:
             pro_category = product.product_category.category_name
-        
+
         if check2 is None:
             pro_sub_category = '-'
         else:
             pro_sub_category = product.sub_category.sub_category_name
 
+        if check3 is None:
+            self.product_datasheet = None
 
-        print('Inventory Image Path: {0}'.format(product.image_one))
-        print('INVENTORY - PRODUCT CODE: {0}'.format(pro_code))
-        print('INVENTORY - PRODUCT NAME: {0}'.format(pro_name))
+        else:
+            self.product_datasheet = check3
+
+        # print('Inventory Image Path: {0}'.format(product.image_one))
+        # print('INVENTORY - PRODUCT CODE: {0}'.format(pro_code))
+        # print('INVENTORY - PRODUCT NAME: {0}'.format(pro_name))
         try:
             if pro_category is None:
                 if self.pk is None:
@@ -206,7 +214,7 @@ class Inventory(models.Model):
                     self.product_name = pro_name
                     self.product_category = pro_category
                     self.category_image = product.image_one
-            
+
             if pro_sub_category is None:
                 if self.pk is None:
                     self.product_sub_category = "-"

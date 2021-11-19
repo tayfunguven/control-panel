@@ -125,7 +125,7 @@ class RMAFormAdmin(admin.ModelAdmin):
         'outlet'
     )
 
-    fieldsets = (
+    '''fieldsets = (
         (None, {
             "fields": (
                 'rma_number', 'log_date',
@@ -151,7 +151,7 @@ class RMAFormAdmin(admin.ModelAdmin):
                 'outlet', 'rma_description'
             ),
         }),
-    )
+    )'''
     
     search_fields = (
         'rma_form_id',

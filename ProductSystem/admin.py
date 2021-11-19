@@ -151,6 +151,7 @@ class InventoryAdmin(admin.ModelAdmin):
         'product_name',
         'product_category',
         'product_sub_category',
+        'product_datasheet',
         'product_quantity',
         'recommended_price',
         'money_unit',
@@ -161,7 +162,7 @@ class InventoryAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Envanter Bilgisi', {
-            'fields': (('product_id','product_code', 'product_name'), ('product_category', 'product_sub_category', 'category_image_preview'), ('recommended_price','money_unit'), 'inventory_checked','product_quantity', 'description',)
+            'fields': (('product_id','product_code', 'product_name'), ('product_category', 'product_sub_category', 'category_image_preview', 'product_datasheet'), ('recommended_price','money_unit'), 'inventory_checked','product_quantity', 'description',)
         }),
         ('', {
             'fields': (('warehouse_location', 'shelf_info'), ('shelf_no', 'shelf_product_x_axis', 'shelf_product_y_axis'),)
@@ -198,20 +199,20 @@ class InventoryAdmin(admin.ModelAdmin):
 
     list_editable = ('recommended_price', 'description', 'money_unit')
 
-    readonly_fields = ('product_code', 'product_name', 'product_category', 'product_sub_category', 'category_image_preview')
+    readonly_fields = ('product_code', 'product_name', 'product_category', 'product_sub_category', 'category_image_preview', 'product_datasheet')
 
     def category_image_preview(self, obj):
         if obj.category_image:
             return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.category_image.url))
         else:
             return '(No image)'
-
+    
     category_image_preview.short_description = "Gorsel"
 
     def get_form(self, request, obj=None, **kwargs):
         print('INVENTORY PERMISSION: {0}'.format(request.user.has_perm('ProductSystem.custom_permission')))
         if request.user.has_perm('ProductSystem.custom_permission'):
-            self.fieldsets[0][1]["fields"] = (('product_id','product_code', 'product_name'), ('product_category', 'product_sub_category', 'category_image_preview'), ('recommended_price','money_unit'), 'inventory_checked','product_quantity', 'description',)
+            self.fieldsets[0][1]["fields"] = (('product_id','product_code', 'product_name'), ('product_category', 'product_sub_category', 'category_image_preview', 'product_datasheet'), ('recommended_price','money_unit'), 'inventory_checked','product_quantity', 'description',)
             self.fieldsets[1][1]["fields"] = (('warehouse_location', 'shelf_info'), ('shelf_no', 'shelf_product_x_axis', 'shelf_product_y_axis'),)
             self.inlines[0].fieldsets[0][1]["fields"] = (('additional_serial', 'additional_internal'), ('product_status','tested_status'), ('additional_description','test_result_description'),)
             self.inlines[0].fieldsets[1][1]["fields"] = (('image_one', 'image_two'), ('image_three', 'image_four'),)
@@ -222,7 +223,7 @@ class InventoryAdmin(admin.ModelAdmin):
             #self.exclude = ('warehouse_location','shelf_info', 'shelf_no', 'shelf_product_x_axis', 'shelf_product_y_axis','inventory_checked',)
             #self.inlines[0].exclude = ('tested_status', 'test_result_description', 'image_one', 'image_two', 'image_three', 'image_four','additional_serial',)
             ## Dynamically overriding
-            self.fieldsets[0][1]["fields"] = (('product_id','product_code', 'product_name'), ('product_category', 'product_sub_category', 'category_image_preview'), ('recommended_price','money_unit'), 'product_quantity', 'description',)
+            self.fieldsets[0][1]["fields"] = (('product_id','product_code', 'product_name'), ('product_category', 'product_sub_category', 'category_image_preview', 'product_datasheet'), ('recommended_price','money_unit'), 'product_quantity', 'description',)
             self.fieldsets[1][1]["fields"] = ()
             self.inlines[0].fieldsets[0][1]["fields"] =(('additional_internal'), ('product_status'), ('additional_description',),)
             self.inlines[0].fieldsets[1][1]['fields'] = ''
@@ -240,6 +241,7 @@ class InventoryAdmin(admin.ModelAdmin):
                 'product_name',
                 'product_category',
                 'product_sub_category',
+                'product_datasheet',
                 'product_quantity',
                 'recommended_price',
                 'money_unit',
