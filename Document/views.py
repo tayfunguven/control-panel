@@ -11,6 +11,8 @@ from django.contrib.auth.decorators import login_required
 def render_pdf_view(request):
    demo_object = DemoDeliveryForm.objects.filter(pk = request.user.id)
    selected_products_properties = demo_object[0].product_id.all()
+   
+   #print(demo_object)
    # for item in selected_products:
    #    print('AAAAAAA ----  '   +  str(item))
    template_path = 'Forms/demo_form.html'
@@ -18,12 +20,11 @@ def render_pdf_view(request):
       'document_infos': demo_object,
       'product_infos' : selected_products_properties,
    }
-
   
    # Create a Django response object, and specify content_type as pdf
    response = HttpResponse(content_type='application/pdf')
    # TO DOWNLOAD:
-   response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+   response['Content-Disposition'] = 'inline; filename="report.pdf"'
 
    # TO DISPLAY:
    #response['Content-Disposition'] = 'filename="report.pdf"'

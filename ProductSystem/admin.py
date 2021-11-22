@@ -5,8 +5,8 @@ from django.forms import TextInput, Textarea
 from ProductSystem.resources import InventoryCardResource, InventoryResource
 from import_export.admin import ImportExportModelAdmin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
-from django.contrib.auth.models import Permission, User
-from django.contrib.contenttypes.models import ContentType
+# from django.contrib.auth.models import Permission, User
+# from django.contrib.contenttypes.models import ContentType
 
 class InventoryCardAdmin(ImportExportModelAdmin):
     list_display = (
@@ -540,8 +540,6 @@ class ProductOutletAdmin(admin.ModelAdmin):
 
     class Media:
         js = ('/static/admin/js/hide_attribute.js',)
- 
-        
 
 admin.site.register(ProductStatus)
 admin.site.register(ProductCategory)
@@ -553,6 +551,3 @@ admin.site.register(InventoryCard, InventoryCardAdmin)
 admin.site.register(Inventory, InventoryAdmin)
 admin.site.register(ProductEnrty, ProductEntryAdmin)
 admin.site.register(ProductOutlet, ProductOutletAdmin)
-
-
-
