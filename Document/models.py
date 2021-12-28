@@ -47,7 +47,6 @@ class DemoProduct(models.Model):
         verbose_name = 'Demo Ürünü'
         verbose_name_plural = 'Demo Ürünleri'
 
-
 class DeviceDeliveryForm(models.Model):
     reference_regex = RegexValidator(regex=r'^MM[A-Z]{2,8}-[0-9]{6}-[0-9]{3}$', message="Girmis oldugunuz referans numarasi uygun formatta degildir! (Ornek format: MMTYFN-010121-001)")
 

@@ -1,0 +1,124 @@
+{% extends 'base_web.html' %}
+{% load static %}
+
+{% block content %}
+
+{% if submitted %}
+    <div class="container-rmabasvuru" id="rmabasvuru" data-background="{% static 'momentomedya/img/image-RMAForm' %}" style="background-image:url({% static 'momentomedya/Assets/img/image-RMAForm.jpg' %}); background-size:cover !important; background-repeat: no-repeat !important ">
+        <div class="row">
+        <div class="col-1"></div>
+            <div class="col-md-7">
+            <div class="row" style="margin-top: 100px"></div>
+            <div class="row">
+                <div class="container bg-light" style="padding: 25px">
+                    <div class="row">
+                        <div class="col-1">
+                            <div class="verticalText">
+                                SERVİS FORMU
+                            </div>
+                        </div>
+                        <div class="col-11">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h1>Basvuru formunda gerekli yerleri doldurunuz.</h1>
+                                </br><h3 style="margin-top: 70px; color: green" > Mesajınız Başarıyla Yollanmıştır!!! </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!--END FORM SECTION-->
+{% else %}
+
+<!--FORM SECITON-->
+<div class="container-rmabasvuru" id="rmabasvuru" data-background="{% static 'momentomedya/img/image-rmabasvuru.jpg' %}" style="background-image:url({% static 'momentomedya/Assets/img/image-rmabasvuru.jpg' %}); background-size:cover !important; background-repeat: no-repeat !important ">
+    <div class="row">
+    <div class="col-1"></div>
+        <div class="col-md-7">
+        <div class="row" style="margin-top: 100px"></div>
+        <div class="row">
+            <div class="container bg-light" style="padding: 25px">
+                <div class="row">
+                    <div class="col-1">
+                        <div class="verticalText">
+                            SERVİS FORMU
+                        </div>
+                    </div>
+                    <div class="col-11">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1>Bize mesaj gönderin...</h1>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="heading-underline-career"></div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-10"><div class="forcss1">
+    <form action="" method=POST>
+    {% csrf_token %}
+
+    {{form.as_p}}
+    
+    <div class="row justify-content-left">
+        <div class="col-12">
+            <div class="form-check">
+            <p style="font-size: 12px; color: red">* ile işaretli yerleri doldurması zorunludur!</p></br>
+                <input class="form-check-input" type="checkbox" value="" id="pdpb_approval" onclick="OnaylamaJS()">
+                <label class="form-check-label" for="pdpb_approval">
+                    <a data-toggle="modal" data-target="#KVKK" style="color: blue">KVKK Metnini</a> okudum ve onaylıyorum.
+                </label>    
+            </div>
+        </div>
+    </div>
+
+<input type="submit" value="Gönder" class="btn btn-success" id="Gonder" disabled></div>
+
+
+    </form></div>
+                </div>
+            </div>
+        </div></div>
+        <div class="col-md-8"></div>
+    </div>
+</div></div>
+
+<!--END FORM SECTION-->
+{% endif %}
+
+<!--KVKK METİNİ MODAL-->
+<div class="modal fade" id="KVKK" tabindex="-1" role="dialog" aria-labelledby="KVKKMetini" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="KVKKMetini">KVKK Metini</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          ...
+        </div> 
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" style="background-color: red">Kapat</button>
+          <button type="button" id="onayla" onclick="OnaylamaJS()" class="btn btn-primary" style="background-color: green" data-dismiss="modal">Anladım ve Onaylıyorum.</button>
+        </div> 
+      </div>
+    </div>
+  </div>
+</div>
+   <script>
+  function OnaylamaJS(){
+  document.getElementById("pdpb_approval").checked = true;
+  document.getElementById("Gonder").disabled = false;
+  }
+  </script>
+  <!--END KVKK METİNİ MODAL-->
+  
+{% endblock %}

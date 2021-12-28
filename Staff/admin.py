@@ -1,17 +1,9 @@
-from typing import TextIO
 from django.contrib import admin
-from django.contrib.admin.options import InlineModelAdmin, TabularInline
 from django.db import models
-from django.db.models.expressions import OuterRef
-from django.db.models.fields import TextField
-from Staff.models import CalendarReport
 from Staff.models import *
 from import_export.admin import ImportExportModelAdmin
 from django.forms import TextInput, Textarea
-# from nested_inline.admin import NestedStackedInline, NestedModelAdmin
-import nested_admin
 from nested_inline.admin import NestedModelAdmin, NestedStackedInline
-
 
 class EmployeeAdmin(admin.ModelAdmin):
     list_filter = ('employee_name',)
@@ -235,7 +227,7 @@ class ReportContentInline(NestedStackedInline):
             'fields': ('company', 'company_authorized'),
         }),
     )
-    filter_horizontal = ('job_type', 'company', 'company_authorized', 'related_person',)
+    filter_horizontal = ('company', 'company_authorized', 'related_person',)
 
     class Media:
         css = {
@@ -306,17 +298,17 @@ class ReportAdmin(NestedModelAdmin):
     
     def report_related_person(self, obj):
         return ", ".join(
-            [str(child.related_person) for child in obj.reports.all()]
+            [str(child.related_person.all()) for child in obj.reports.all()]
         )
     
     def report_company(self, obj):
         return ", ".join(
-            [str(child.company) for child in obj.reports.all()]
+            [str(child.company.all()) for child in obj.reports.all()]
         )
     
     def report_company_authorized(self, obj):
         return ", ".join(
-            [str(child.company_authorized) for child in obj.reports.all()]
+            [str(child.company_authorized.all()) for child in obj.reports.all()]
         )
 
     def get_queryset(self, request):
@@ -407,49 +399,82 @@ admin.site.register(Report, ReportAdmin)
 admin.site.register(JobType)
 admin.site.register(AuthorizedPerson, AuthorizedPersonAdmin)
 
-
-@admin.register(CalendarReport)
-class CalendarReportAdmin(admin.ModelAdmin):
-    change_list_template = 'admin/calendar_report.html'
+class BusinessTaskCommentInline(admin.StackedInline):
+    model = BusinessTaskComment
+    extra = 1
+    fieldsets = (
+        (None, {
+            "fields": (
+                'comment', 'attach', 'tag_person'
+            ),
+        }),
+    )
+    formfield_overrides = {
+        models.TextField: {'widget' : Textarea (attrs={'rows':5, 'cols':100})},
+        #models.CharField: {'widget' : TextInput (attrs={'size':50})},
+        #models.ManyToManyField: {'widget' : Textarea(attrs={'rows':5, 'cols':50})}
+    }
     
-    # def changelist_view(self, request, extra_context=None):
-    #     response = super().changelist_view(
-    #         request,
-    #         extra_context=extra_context,
-    #     )
+    def has_add_permission(self, request, obj=None):
+        return True
+    
+    def has_change_permission(self, request, obj=None):
+        return False
 
-    #     try:
-    #         qs = response.context_data['cl'].queryset
-    #     except (AttributeError, KeyError):
-    #         return response
-
-    #     metrics = {
+class BusinessTaskAdmin(admin.ModelAdmin):
+    inlines = [BusinessTaskCommentInline]
+    list_display = (
+        'title',
+        'created_at',
+        'deadline',
+        'state',
+        'priority',
+    )
+    list_display_links = (
+        'title',
+        'created_at',
+        'deadline',
+        'state',
+        'priority',
+    )
+    search_fields = (
+        'title',
+        'attach',
+    )
+    list_filter = (
+        'state',
+        'priority',
+    )
+    fieldsets = (
+        ('Task', {
+            'fields': ('title', 'assigned_to', ('created_at', 'deadline'),('state', 'priority'),'description', 'attach'),
+        }),
+    )
+    def save_formset(self, request, form, formset, change):
+        if formset.model != BusinessTaskComment:
+            return super(BusinessTaskAdmin, self).save_formset(request, form, formset, change)
+        instances = formset.save(commit=False)
+        for instance in instances:
+            if not instance.pk:
+                instance.author = request.user.get_full_name()
+            instance.save()
+        formset.save_m2m()
+    
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser and request.user.has_perm('Staff.task_edit_field_permission'):
+            return []
+        else:
+            return ['title', 'assigned_to', 'created_at', 'deadline', 'state', 'priority', 'description', 'attach']
             
-    #     }
-        
-    #     # response.context_data['summary'] = list(
-    #     #     qs
-    #     #     .values(
-    #     #         'income_code',
-    #     #         'income_name',
-    #     #         'amount',
-    #     #         'unit_id',
-    #     #         'currency_price',
-    #     #         'currency_type',
-    #     #         'price',
-    #     #         'subtotal',
-    #     #         'vat_rate',
-    #     #         'vat_amount',
-    #     #         'grand_total',
-    #     #         'log_date',
-    #     #         'user'
-    #     #     )
-    #     #     .annotate(**metrics)
-    #     #     .order_by('-log_date'),
-    #     # )
-        
-    #     # response.context_data['summary_total'] = dict(
-    #     #     qs.aggregate(**metrics),           
-    #     # )
-    #     return response
+    def formfield_for_manytomany(self, db_field, request, **kwargs):
+        if db_field.name == "assigned_to":
+            kwargs["queryset"] = User.objects.filter(groups='5')
+        return super(BusinessTaskAdmin, self).formfield_for_manytomany(db_field, request, **kwargs)
     
+    def get_queryset(self, request):
+        qs = super(BusinessTaskAdmin, self).get_queryset(request)
+        if request.user.is_superuser:
+            return qs
+        return qs.filter(assigned_to=request.user)
+
+admin.site.register(BusinessTask, BusinessTaskAdmin)    

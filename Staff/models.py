@@ -51,39 +51,11 @@ JOB_STATUS = [
     ('Eski', 'Eski'),
     ('Yeni', 'Yeni'),
 ]
-        
-from django.db import models
-from datetime import datetime
-from django.contrib.auth.models import User
-from django.db.models.deletion import CASCADE, DO_NOTHING
-from django.template.defaultfilters import truncatechars  # or truncatewords
-
-PERMIT_CHOICES = [
-    ('Yillik Izin','Yıllık İzin'),
-    ('Saglik Izni','Sağlık İzni'),
-    ('Özel Izin','Özel İzin'),
-]
-
-PERMIT_TYPE = [
-    ('Ücretli Izin', 'Ücretli İzin'),
-    ('Ücretsiz Izin', 'Ücretsiz İzin'),
-]
-
-APPROVAL_STATUS = [
-    ('Beklemede','Beklemede'),
-    ('Onaylandi','Onaylandı'),
-    ('Reddedildi','Reddedildi'),
-]
 
 WORK_PROGRESS = [
     ('Takipte','Takipte'),
     ('Tamamlandi','Tamamlandı'),
     ('Takipsiz','Takipsiz')
-]
-
-JOB_STATUS = [
-    ('Eski', 'Eski'),
-    ('Yeni', 'Yeni'),
 ]
 
 class Report(models.Model):
@@ -128,7 +100,7 @@ class AuthorizedPerson (models.Model):
 class ReportContent(models.Model):
     content_id = models.BigAutoField(primary_key=True)
     title = models.CharField("Başlık", max_length = 150, blank=False, null=False)
-    job_type = models.ManyToManyField(JobType, related_name="job_types", blank=False, null=False, verbose_name="İş Türü")
+    job_type = models.ForeignKey(JobType, related_name="job_types", on_delete=models.CASCADE, blank=False, null=False, verbose_name="İş Türü")
     job_status = models.CharField("İş Statüsü", max_length=50, blank=False, null=False, choices=JOB_STATUS)
     #company_info = models.ForeignKey(Company, related_name="companies", on_delete=models.CASCADE, blank=False, null=False)
     work_progress = models.CharField("İş durumu", max_length=100, blank=False, null=False, choices=WORK_PROGRESS)
@@ -145,18 +117,6 @@ class ReportContent(models.Model):
     class Meta:
         verbose_name = "Rapor İçeriği"
         verbose_name_plural = ""
-
-# class TopLevel(models.Model):
-#     name = models.CharField(max_length=200)
-# class LevelOne(models.Model):
-#     name = models.CharField(max_length=200) 
-#     level = models.ForeignKey(TopLevel, on_delete=models.CASCADE)
-# class LevelTwo(models.Model):
-#     name = models.CharField(max_length=200) 
-#     level = models.ForeignKey(LevelOne, on_delete=models.CASCADE)
-# class LevelThree(models.Model):
-#     name = models.CharField(max_length=200) 
-#     level = models.ForeignKey(LevelTwo, on_delete=models.CASCADE)
 
 class Employee(models.Model):
     employee_id = models.BigAutoField(primary_key=True, verbose_name="Personel Kodu")
@@ -206,10 +166,70 @@ class PermitRequest(models.Model):
     class Meta:
         verbose_name = ("İzin Talebi")
         verbose_name_plural = ("İzin Talepleri")
+        
+from django.db import models
+from django.contrib.auth.models import User
 
+STATE = [
+    ('to_do','To Do'),
+    ('in_progress','In Progress'),
+    ('blocked','Blocked'),
+]
 
-class CalendarReport(ReportContent):
+PRIORITY = [
+    ('normal','Normal'),
+    ('low','Low'),
+    ('high','High'),
+    ('critical','Critical'),
+]
+
+class BusinessTask(models.Model):
+    task_id = models.BigAutoField(primary_key=True)
+    title = models.CharField('Title', max_length=200, blank=False, null=False)
+    assigned_to = models.ManyToManyField(User, related_name='business_users', blank=False, null=False, verbose_name='Assign To')
+    created_at = models.DateTimeField('Created At', blank=False, null=False)
+    deadline = models.DateTimeField('Deadline', blank=False, null=False)
+    state = models.CharField('State', max_length=200, blank=False, null=False, choices=STATE, default=STATE[0])
+    priority = models.CharField('Priority', max_length=100, blank=False, null=False, choices=PRIORITY, default=PRIORITY[0])
+    description = models.TextField('Description', blank=False, null=False)
+    attach = models.FileField('Attach File', upload_to='GENERAL/Business Task Folders/', blank=True, null=True)
+    
+    def __str__(self):
+        return 'Id: ' + str(self.task_id) + ' Title: ' + str(self.title) 
+
     class Meta:
-        proxy = True
-        verbose_name = 'Rapor'
-        verbose_name_plural = 'Raporlar'
+        verbose_name = 'Task'
+        verbose_name_plural = 'Tasks'
+        permissions = [
+            ('task_edit_field_permisson', 'Task Edit Field Permission'),
+        ]
+
+class BusinessTaskComment(models.Model):
+    comment_id = models.BigAutoField(primary_key=True)
+    comment = models.TextField('Message', blank=False, null=False)
+    author = models.CharField("From", max_length=50, default=User,)
+    attach = models.FileField('Attach File', upload_to='GENERAL/Business Task Folders/', blank=True, null=True)
+    task = models.ForeignKey(BusinessTask, on_delete=models.CASCADE, related_name='business_tasks', verbose_name='Task')
+    tag_person = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_relateds', verbose_name='Related Person', blank=True, null=True)
+
+    def __str__(self):
+        return str(self.author)
+    
+    class Meta: 
+        verbose_name = 'Replied By'
+        verbose_name_plural = 'Replies'
+
+class BusinessTaskChildComment(models.Model):
+    child_comment_id = models.BigAutoField(primary_key=True)
+    child_comment = models.TextField('', blank=False, null=False)
+    author = models.CharField("From", max_length=50, default=User,)
+    attach = models.FileField('Attach File', upload_to='GENERAL/Business Task Folders/', blank=True, null=True)
+    parent_comment = models.ForeignKey(BusinessTaskComment, on_delete=models.CASCADE, related_name='business_tasks', verbose_name='Parent Comment')
+    
+    def __str__(self):
+        return str(self.author)
+    
+    class Meta: 
+        verbose_name = 'Replied By'
+        verbose_name_plural = ''
+    

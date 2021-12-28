@@ -63,10 +63,10 @@ def get_curenncy_rates(type, date_of_rate):
         print(e)
         
 
-#Users = get_user_model()
-#users = tuple(Users.objects.values_list('username', 'username'))
+# Users = get_user_model()
+# users = tuple(Users.objects.values_list('username', 'username'))
 USER_NAMES = [
-    ('None','None'),
+    ('admin','admin')
 ]
 
 class Incentive(models.Model):
@@ -142,6 +142,7 @@ class AdvancePayment(models.Model):
     payment_id = models.BigAutoField(primary_key=True, verbose_name="Ödeme ID")
     payment_code = models.CharField("Avans Kodu", blank=False, null=False, max_length=8, default=generate_unique_code)
     user = models.CharField("Personel", max_length=200, blank=False, null=False, choices=USER_NAMES)
+    description = models.TextField("Aciklama", blank=True, null=True)
     payment_amount = models.DecimalField("Avans Tutarı", max_digits=25, decimal_places=2, blank=False, null=False)
     log_date = models.DateField("İşlem Tarihi", default=dt.date(dt.now()))
 

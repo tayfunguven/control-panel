@@ -94,6 +94,14 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Momento.urls'
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.momentomedya.com'
+EMAIL_PORT = 465
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'developer@momentomedya.com'
+EMAIL_HOST_PASSWORD = 'Momento@2021'    
+
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

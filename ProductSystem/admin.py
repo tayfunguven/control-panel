@@ -5,8 +5,6 @@ from django.forms import TextInput, Textarea
 from ProductSystem.resources import InventoryCardResource, InventoryResource
 from import_export.admin import ImportExportModelAdmin
 from nested_inline.admin import NestedStackedInline, NestedModelAdmin
-# from django.contrib.auth.models import Permission, User
-# from django.contrib.contenttypes.models import ContentType
 
 class InventoryCardAdmin(ImportExportModelAdmin):
     list_display = (
@@ -41,6 +39,12 @@ class InventoryCardAdmin(ImportExportModelAdmin):
     readonly_fields = ['image_preview1','image_preview2','image_preview3','image_preview4',]
 
     resource_class = InventoryCardResource
+    # fields = (
+    #     ('product_code', 'product_name',),
+    #     'product_category', 'technical_info',
+    #     ('image_one', 'image_two'), ('image_three', 'image_four'),
+    #     ('image_preview1','image_preview2','image_preview3','image_preview4'),
+    # )
 
     fieldsets = (
         ('Ürün Bilgileri', {
@@ -58,28 +62,28 @@ class InventoryCardAdmin(ImportExportModelAdmin):
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image_one:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_one.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_one.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image_two:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_two.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_two.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image_three:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_three.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_three.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         # ex. the name of column is "image"
         if obj.image_four:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_four.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_four.url))
         else:
             return '(No image)'
 
@@ -90,8 +94,8 @@ class InventoryCardAdmin(ImportExportModelAdmin):
   
 class ProductIdentificationInline(NestedStackedInline):
     model = ProductIdentification
+    extra = 1
     fk_name = 'product_id'
-    extra = 0
     formfield_overrides = {
         models.TextField: {'widget' : Textarea (attrs={'rows':3, 'cols':30})},
         models.CharField: {'widget' : TextInput (attrs={'size':20})}
@@ -110,31 +114,32 @@ class ProductIdentificationInline(NestedStackedInline):
     )
     readonly_fields = ['image_preview1','image_preview2','image_preview3','image_preview4',]
     
+    
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image_one:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_one.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_one.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image_two:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_two.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_two.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image_three:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_three.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_three.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         # ex. the name of column is "image"
         if obj.image_four:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_four.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_four.url))
         else:
             return '(No image)'
     image_preview1.short_description = "Ön izleme 1"
@@ -265,14 +270,16 @@ class InventoryAdmin(admin.ModelAdmin):
         qs = super(InventoryAdmin, self).get_queryset(request)
         if request.user.is_superuser or request.user.has_perm('ProductSystem.custom_permission'):
             return qs        
-        return qs.filter(~Q(product_category = 'Handcrafts'))
+        return qs.filter(~Q(product_category = 'Handcrafts') and ~Q(product_category = 'Electronic Component'))
 
 class InventoryInline(NestedStackedInline):
     fk_name = 'product_entry'
     model = Inventory
-    max_num = 1
+    extra = 1
     inlines = [ProductIdentificationInline]
     raw_id_fields = ('product_id',)
+
+    # raw_id_fields = ('additional_number',)
 
     fieldsets = (
         ('Envanter Bilgisi', {
@@ -281,20 +288,26 @@ class InventoryInline(NestedStackedInline):
         ('', {
             'fields': (('warehouse_location', 'shelf_info'), ('shelf_no', 'shelf_product_x_axis', 'shelf_product_y_axis'),)
         }),
+        # ('Ürün Kimlik Bilgileri', {
+        #     'fields': ('additional_number',),
+        # }),
     )
+    
     formfield_overrides = {
         models.TextField: {'widget' : Textarea (attrs={'rows':3, 'cols':30})},
         models.CharField: {'widget' : TextInput(attrs={'size':30})}
+
     }
     list_editable = ('recommended_price', 'description', 'money_unit')
-
+    #resource_class = InventoryResource
     readonly_fields = ('product_code', 'product_name', 'product_category', 'product_sub_category', 'category_image_preview')
 
     def category_image_preview(self, obj):
         if obj.category_image:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.category_image.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.category_image.url))
         else:
             return '(No image)'
+
     category_image_preview.short_description = "Gorsel"
 
 class ProductIdentificationAdmin(admin.ModelAdmin):
@@ -313,7 +326,9 @@ class ProductIdentificationAdmin(admin.ModelAdmin):
     list_display_links = (
         'additional_serial',
         'additional_internal',
+     
         'additional_description',
+        # 'product_codes'
     )
     
     fieldsets = (
@@ -331,27 +346,27 @@ class ProductIdentificationAdmin(admin.ModelAdmin):
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image_one:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_one.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_one.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image_two:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_two.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_two.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image_three:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_three.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_three.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         if obj.image_four:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image_four.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image_four.url))
         else:
             return '(No image)'
 
@@ -372,14 +387,16 @@ class ProductIdentificationAdmin(admin.ModelAdmin):
     def has_delete_permission(self, request, obj=None):
         return False
     # def product_codes(self, obj):
+        
     #     return ", ".join({p.product_code for p in additional_id.inventory_additional_ids.all()})
     # product_codes.short_description = "Ürün Kodu"
 
 class ProductEntryAdmin(NestedModelAdmin):
     inlines = [InventoryInline]
     raw_id_fields = ('company',)
-
+    #autocomplete_fields = ['product_id', 'company', 'delivery_company']
     list_display = (
+        #'product_id',
         'product_name',
         'product_code',
         'product_category',
@@ -391,7 +408,10 @@ class ProductEntryAdmin(NestedModelAdmin):
         'date_interval',
         'description',
         'company',
+        # 'company_authorized',
         'delivery_company',
+        
+        # 'deliverer'
     )
     def product_name(self, obj):
         return ", ".join([
@@ -413,8 +433,9 @@ class ProductEntryAdmin(NestedModelAdmin):
     product_category.short_description = "Kategori"
 
     filter_horizontal = ('company_authorized',)
-
+    #filter_vertical = ('deliverer', 'company_authorized')
     list_display_links = (
+        #'product_id',
         'product_name',
         'product_code',
         'product_category',
@@ -425,11 +446,15 @@ class ProductEntryAdmin(NestedModelAdmin):
         'purchase_price',
         'description',
         'company',
+        # 'company_authorized',
         'delivery_company',
+        # 'deliverer'
     )
 
     search_fields = (
         'description',
+        # 'company_authorized',
+        # 'deliverer'
     )
     
     fieldsets = (
@@ -464,7 +489,9 @@ class ProductOutletAdmin(admin.ModelAdmin):
         'image_preview1',
         'description',
         'company',
+        # 'company_authorized',
         'delivery_company',
+        # 'deliverer'
     )
 
     list_display_links = (
@@ -477,11 +504,15 @@ class ProductOutletAdmin(admin.ModelAdmin):
         'image_preview1',
         'description',
         'company',
+        # 'company_authorized',
         'delivery_company',
+        # 'deliverer'
     )
 
     search_fields = (
         'description',
+        # 'company_authorized',
+        # 'deliverer'
     )
 
     list_filter = (
@@ -509,28 +540,28 @@ class ProductOutletAdmin(admin.ModelAdmin):
     def image_preview1(self, obj):
         # ex. the name of column is "image"
         if obj.image:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image.url))
         else:
             return '(No image)'
 
     def image_preview2(self, obj):
         # ex. the name of column is "image"
         if obj.image1:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image1.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image1.url))
         else:
             return '(No image)'
 
     def image_preview3(self, obj):
         # ex. the name of column is "image"
         if obj.image2:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image2.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image2.url))
         else:
             return '(No image)'
     
     def image_preview4(self, obj):
         # ex. the name of column is "image"
         if obj.image3:
-            return mark_safe('<a target="_blank" href="{0}"><img src="{0}" width="150" height="150" style="object-fit:contain" /></a>'.format(obj.image3.url))
+            return mark_safe('<a target="_blank" href="{0}"><div style="width: 200px; height: 200px;"><img src="{0}" width="150" height="150" style="object-fit:contain; image-rendering: pixelated; image-resolution: 50dpi;" /></div></a>'.format(obj.image3.url))
         else:
             return '(No image)'
     image_preview1.short_description = "Ön izleme 1"
@@ -540,7 +571,95 @@ class ProductOutletAdmin(admin.ModelAdmin):
 
     class Media:
         js = ('/static/admin/js/hide_attribute.js',)
+ 
 
+class RMAProductAdmin(admin.ModelAdmin):
+    raw_id_fields = ['company','company_authorized']
+    #readonly_fields = ['image_preview1','image_preview2','image_preview3','image_preview4']
+    list_display = [
+        'log_date',
+        'product_name',
+        'product_model',
+        'serial_number',
+        'internal_number',
+        'product_category',
+        'product_sub_category',
+        ]
+    list_display_links = [
+        'log_date',
+        'product_name',
+        'product_model',
+        'serial_number',
+        'internal_number',
+        'product_category',
+        'product_sub_category',
+        ]
+    fieldsets = (
+        (None, {
+            "fields": (
+                'log_date',
+            ),
+        }),
+        ("Müsteri Bilgisi", {
+            "fields": (
+                ('company','company_authorized'),
+            ),
+        }),
+        ("Ürün Bilgisi", {
+            "fields": (
+                ('product_name', 'product_model'),('serial_number', 'internal_number'), ('product_category','product_sub_category'),'computer_components'
+            ),
+        }),
+        ("Ariza Bildirisi", {
+            "fields": (
+                'rma_notes', ('bool_damage1','bool_damage2','bool_damage3'),('bool_damage4','bool_damage5','bool_damage6',),'other_damage','document'
+            ),
+        }),
+        ("Fotograflar", {
+            "fields": (
+                ('image_one','image_two'), ('image_three','image_four')
+            ),
+        }),
+        
+    )
+  
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser or request.user.has_perm('ProductSystem.technical_permission'):
+            return []
+        else:
+            return [
+                'log_date',
+                'product_name',
+                'product_model',
+                'serial_number',
+                'internal_number',
+                'product_category',
+                'product_sub_category',
+                'company','company_authorized',
+                'bool_damage1','bool_damage2','bool_damage3','bool_damage4','bool_damage5','bool_damage6','other_damage','document',
+                'image_one','image_two','image_three','image_four',
+                ]
+
+class ComputerComponentAdmin(admin.ModelAdmin):
+    filter_horizontal = ('software', 'custom_component')
+    list_display = (
+        'root', 'password','hardware_id', 'case_info', 'cpu_info', 'motherboard_info','random_access_memory_info', 'harddiskdrive_info','graphiccard_info'
+    )
+    fieldsets = (
+        ('Bilgiler', {
+            'fields': ('ip_address','root', 'password')
+        }),
+
+        ('Yazilim Bilgileri', {
+            'fields': ('software',)
+        }),
+        ('Donanim Bilgileri', {
+            'fields': ('hardware_id', 'case_info', 'cpu_info', 'motherboard_info', 'random_access_memory_info', 'harddiskdrive_info', 'graphiccard_info', 'custom_component')
+        }),
+    )
+    
+admin.site.register(RMAProduct, RMAProductAdmin)
+admin.site.register(ComputerComponent, ComputerComponentAdmin)
 admin.site.register(ProductStatus)
 admin.site.register(ProductCategory)
 admin.site.register(ProductSubCategory)
@@ -551,3 +670,4 @@ admin.site.register(InventoryCard, InventoryCardAdmin)
 admin.site.register(Inventory, InventoryAdmin)
 admin.site.register(ProductEnrty, ProductEntryAdmin)
 admin.site.register(ProductOutlet, ProductOutletAdmin)
+#admin.site.register(Permission)

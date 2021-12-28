@@ -57,7 +57,7 @@ class RegisterDealAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(RegisterDealAdmin, self).get_queryset(request)
-        if request.user.is_superuser:
+        if request.user.is_superuser or request.user.username =='aviwest':
             return qs
         #return qs.filter(user=request.user.get_full_name())
         return qs.filter(user=request.user)
@@ -174,7 +174,7 @@ class RegisterLogAdmin(admin.ModelAdmin):
 
     def get_queryset(self, request):
         qs = super(RegisterLogAdmin, self).get_queryset(request)
-        if request.user.is_superuser:
+        if request.user.is_superuser or request.user.username =='aviwest':
             return qs
         #return qs.filter(user=request.user.get_full_name())
         return qs.filter(user=request.user)

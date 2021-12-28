@@ -57,3 +57,4 @@ class DeliveryCompany(models.Model):
     class Meta:
         verbose_name = "Teslimat Firması"
         verbose_name_plural = "Teslimat Firmaları"
+

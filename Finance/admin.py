@@ -554,6 +554,7 @@ class IncentiveAdmin(admin.ModelAdmin):
     date_hierarchy = 'log_date'
     list_filter = ('user','log_date',)
     readonly_fields = ['log_date',]
+    
     def get_queryset(self, request):
         qs = super(IncentiveAdmin, self).get_queryset(request)
         if request.user.is_superuser:
@@ -582,6 +583,7 @@ class AdvancePaymentAdmin(admin.ModelAdmin):
         'payment_code',
         'payment_amount',
         'user',
+        'description',
         'log_date'
     )
     readonly_fields = ['log_date',]
@@ -611,6 +613,11 @@ class AdvancePaymentAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
         return qs.filter(user=request.user)
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return []
+        else:
+            return ['log_date','description']
 
 class SalaryInfoAdmin(admin.ModelAdmin):
     list_display = (

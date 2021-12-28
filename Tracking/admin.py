@@ -224,8 +224,8 @@ class ProductOutletAdmin(admin.ModelAdmin):
     def has_view_permission(self, request, obj=None):
         return True
 admin.site.register(ProductRegistration,ProductRegistrationAdmin)
-admin.site.register(ProductEnrty, ProductEntryAdmin)
-admin.site.register(ProductOutlet, ProductOutletAdmin)
+#admin.site.register(ProductEnrty, ProductEntryAdmin)
+#admin.site.register(ProductOutlet, ProductOutletAdmin)
 
 
 from django.contrib import admin

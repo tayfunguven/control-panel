@@ -63,3 +63,6 @@ class FirmAuthorizedPersonAdmin(admin.ModelAdmin):
 admin.site.register(Firm, FirmAdmin)
 admin.site.register(FirmAuthorizedPerson, FirmAuthorizedPersonAdmin)
 admin.site.register(DeliveryCompany,)
+
+
+
